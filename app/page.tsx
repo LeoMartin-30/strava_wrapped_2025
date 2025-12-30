@@ -1,0 +1,384 @@
+'use client';
+
+import { useState, useCallback, useEffect } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Camera } from 'lucide-react';
+import FileUpload from '@/components/upload/FileUpload';
+import IdentitySlide from '@/components/slides/IdentitySlide';
+import IntroSlide from '@/components/slides/IntroSlide';
+import IntensitySlide from '@/components/slides/IntensitySlide';
+import PowerSlide from '@/components/slides/PowerSlide';
+import ElevationSlide from '@/components/slides/ElevationSlide';
+import GravitySlide from '@/components/slides/GravitySlide';
+import TrailSlide from '@/components/slides/TrailSlide';
+import CalorieSlide from '@/components/slides/CalorieSlide';
+import ChronosSlide from '@/components/slides/ChronosSlide';
+import ChronosMonthSlide from '@/components/slides/ChronosMonthSlide';
+import ChronosDaySlide from '@/components/slides/ChronosDaySlide';
+import WeatherSlide from '@/components/slides/WeatherSlide';
+import ConsistencySlide from '@/components/slides/ConsistencySlide';
+import ActivityBreakdownSlide from '@/components/slides/ActivityBreakdownSlide';
+import RecordsSlide from '@/components/slides/RecordsSlide';
+import KudosSlide from '@/components/slides/KudosSlide';
+import MoteurSlide from '@/components/slides/MoteurSlide';
+import SocialButterflySlide from '@/components/slides/SocialButterflySlide';
+import SummarySlide from '@/components/slides/SummarySlide';
+import { ThemeProvider, useTheme } from '@/contexts/ThemeContext';
+import { LanguageProvider } from '@/contexts/LanguageContext';
+import { filterActivitiesByYear } from '@/lib/csvParser';
+import { processActivities } from '@/lib/dataProcessor';
+import { parseStravaZip } from '@/lib/zipParser';
+import { detectDominance } from '@/lib/dominanceDetector';
+import { exportSlideToImage, shareToSocial, getRecommendedQuality } from '@/lib/exportStories';
+import { shouldShowSlide } from '@/lib/fallbackRules';
+import { ProcessedStats } from '@/types';
+
+function HomeContent() {
+  const { applyTheme } = useTheme();
+  const [stats, setStats] = useState<ProcessedStats | null>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isExporting, setIsExporting] = useState(false);
+
+  const handleFileSelect = useCallback(async (file: File) => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      // Hardcoded year for Strava Wrapped 2025
+      const year = 2025;
+
+      // Parse Strava ZIP export with year filter for social data
+      const zipData = await parseStravaZip(file, year);
+
+      if (zipData.activities.length === 0) {
+        throw new Error('Aucune activité trouvée dans ton export Strava');
+      }
+
+      // Filter activities for 2025
+      const yearActivities = filterActivitiesByYear(zipData.activities, year);
+
+      console.log(`DEBUG: Total activities in ZIP: ${zipData.activities.length}`);
+      console.log(`DEBUG: Activities filtered for ${year}: ${yearActivities.length}`);
+
+      // Always use year-filtered activities for 2025
+      const activitiesToProcess = yearActivities.length > 0 ? yearActivities : zipData.activities;
+
+      // Process activities with additional data
+      const processedStats = processActivities(
+        activitiesToProcess,
+        yearActivities.length > 0 ? year : undefined,
+        {
+          profile: zipData.profile,
+          preferences: zipData.preferences,
+          comments: zipData.comments,
+          social: zipData.social,
+          logins: zipData.logins,
+          followers: zipData.followers,
+          challenges: zipData.challenges,
+        }
+      );
+
+      setStats(processedStats);
+
+      // Detect dominance profile and apply theme
+      const dominance = detectDominance(processedStats);
+      applyTheme(dominance.theme);
+
+      setCurrentSlide(0);
+    } catch (err) {
+      console.error('Error processing file:', err);
+      setError(err instanceof Error ? err.message : 'Impossible de traiter le fichier');
+    } finally {
+      setIsLoading(false);
+    }
+  }, [applyTheme]);
+
+  // Helper function to get total slides count
+  const getTotalSlides = useCallback(() => {
+    if (!stats) return 0;
+    return (
+      1 + // intro (dashboard/tableau de bord)
+      (stats.profile ? 1 : 0) + // identity (if profile exists)
+      (Object.keys(stats.activitiesByType).length > 1 ? 1 : 0) + // activity breakdown
+      (shouldShowSlide('IntensitySlide', stats) ? 1 : 0) + // intensity (with fallback)
+      (shouldShowSlide('PowerSlide', stats) ? 1 : 0) + // power (with fallback)
+      1 + // elevation
+      (shouldShowSlide('GravitySlide', stats) ? 1 : 0) + // gravity slide (with fallback)
+      (shouldShowSlide('TrailSlide', stats) ? 1 : 0) + // trail factor (with fallback)
+      (shouldShowSlide('CalorieSlide', stats) ? 1 : 0) + // calorie converter (with fallback)
+      (Object.keys(stats.activitiesByMonth).length > 0 ? 1 : 0) + // chronos month
+      (Object.keys(stats.activitiesByDayOfWeek).length > 0 ? 1 : 0) + // chronos day of week
+      1 + // chronos time of day (5 periods now)
+      (shouldShowSlide('WeatherSlide', stats) ? 1 : 0) + // weather (with fallback >= 5 activities)
+      (stats.comments.length > 0 || stats.social.totalKudos > 0 ? 1 : 0) + // kudos
+      (shouldShowSlide('MoteurSlide', stats) ? 1 : 0) + // moteur (with fallback)
+      (shouldShowSlide('SocialButterflySlide', stats) ? 1 : 0) + // social butterfly (with fallback)
+      1 + // consistency
+      1 + // records
+      1 // summary
+    );
+  }, [stats]);
+
+  const handleNext = useCallback(() => {
+    if (!stats) return;
+
+    const totalSlides = getTotalSlides();
+    const nextIndex = currentSlide + 1;
+
+    if (nextIndex >= totalSlides) {
+      // Reset to upload screen
+      setStats(null);
+      setCurrentSlide(0);
+    } else {
+      setCurrentSlide(nextIndex);
+    }
+  }, [currentSlide, stats, getTotalSlides]);
+
+  const handlePrevious = useCallback(() => {
+    if (!stats) return;
+
+    if (currentSlide > 0) {
+      setCurrentSlide(currentSlide - 1);
+    }
+  }, [currentSlide, stats]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    if (!stats) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        handleNext();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        handlePrevious();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [stats, handleNext, handlePrevious]);
+
+  const renderSlide = () => {
+    if (!stats) return null;
+
+    // Build slide order based on available data (with intelligent fallbacks)
+    const slides = [];
+
+    // 1. Intro (Dashboard/Tableau de bord)
+    slides.push(<IntroSlide key="intro" data={stats} onNext={handleNext} onPrevious={handlePrevious} />);
+
+    // 2. Identity (if profile exists)
+    if (stats.profile) {
+      slides.push(<IdentitySlide key="identity" data={stats} onNext={handleNext} onPrevious={handlePrevious} />);
+    }
+
+    // 3. Activity Breakdown (répartition par type)
+    if (Object.keys(stats.activitiesByType).length > 1) {
+      slides.push(<ActivityBreakdownSlide key="breakdown" data={stats} onNext={handleNext} onPrevious={handlePrevious} />);
+    }
+
+    // 4. Intensity (Heart rate zones) - with fallback
+    if (shouldShowSlide('IntensitySlide', stats)) {
+      slides.push(<IntensitySlide key="intensity" data={stats} onNext={handleNext} onPrevious={handlePrevious} />);
+    }
+
+    // 5. Power (Puissance) - with fallback
+    if (shouldShowSlide('PowerSlide', stats)) {
+      slides.push(<PowerSlide key="power" data={stats} onNext={handleNext} onPrevious={handlePrevious} />);
+    }
+
+    // 6. Elevation (Dénivelé)
+    slides.push(<ElevationSlide key="elevation" data={stats} onNext={handleNext} onPrevious={handlePrevious} />);
+
+    // 7. Gravity (Gravité) - with fallback
+    if (shouldShowSlide('GravitySlide', stats)) {
+      slides.push(<GravitySlide key="gravity" data={stats} onNext={handleNext} onPrevious={handlePrevious} />);
+    }
+
+    // 8. Trail Factor - with fallback
+    if (shouldShowSlide('TrailSlide', stats)) {
+      slides.push(<TrailSlide key="trail" data={stats} onNext={handleNext} onPrevious={handlePrevious} />);
+    }
+
+    // 9. Calorie Converter (Carburant) - with fallback
+    if (shouldShowSlide('CalorieSlide', stats)) {
+      slides.push(<CalorieSlide key="calories" data={stats} onNext={handleNext} onPrevious={handlePrevious} />);
+    }
+
+    // 10. Chronos Month (split par mois)
+    if (Object.keys(stats.activitiesByMonth).length > 0) {
+      slides.push(<ChronosMonthSlide key="chronos-month" data={stats} onNext={handleNext} onPrevious={handlePrevious} />);
+    }
+
+    // 11. Chronos Day (split par jour de semaine)
+    if (Object.keys(stats.activitiesByDayOfWeek).length > 0) {
+      slides.push(<ChronosDaySlide key="chronos-day" data={stats} onNext={handleNext} onPrevious={handlePrevious} />);
+    }
+
+    // 12. Chronos (split par heure de journée - 5 périodes)
+    slides.push(<ChronosSlide key="chronos" data={stats} onNext={handleNext} onPrevious={handlePrevious} />);
+
+    // 13. Weather (Météo) - with fallback >= 5 activities
+    if (shouldShowSlide('WeatherSlide', stats)) {
+      slides.push(<WeatherSlide key="weather" data={stats} onNext={handleNext} onPrevious={handlePrevious} />);
+    }
+
+    // 14. Kudos (Chasseur de kudos)
+    if (stats.comments.length > 0 || stats.social.totalKudos > 0) {
+      slides.push(<KudosSlide key="kudos" data={stats} onNext={handleNext} onPrevious={handlePrevious} />);
+    }
+
+    // 15. Moteur - with fallback
+    if (shouldShowSlide('MoteurSlide', stats)) {
+      slides.push(<MoteurSlide key="moteur" data={stats} onNext={handleNext} onPrevious={handlePrevious} />);
+    }
+
+    // 16. Social Butterfly (followers/challenges) - with fallback
+    if (shouldShowSlide('SocialButterflySlide', stats)) {
+      slides.push(<SocialButterflySlide key="social-butterfly" data={stats} onNext={handleNext} onPrevious={handlePrevious} />);
+    }
+
+    // 17. Consistency (Régularité)
+    slides.push(<ConsistencySlide key="consistency" data={stats} onNext={handleNext} onPrevious={handlePrevious} />);
+
+    // 18. Records (Hall of Fame)
+    slides.push(<RecordsSlide key="records" data={stats} onNext={handleNext} onPrevious={handlePrevious} />);
+
+    // 19. Summary (Récapitulatif final)
+    slides.push(<SummarySlide key="summary" data={stats} onNext={handleNext} onPrevious={handlePrevious} />);
+
+    return slides[currentSlide];
+  };
+
+  // Handle export slide to PNG
+  const handleExportSlide = async () => {
+    setIsExporting(true);
+    try {
+      const slideElement = document.querySelector('.slide-container') as HTMLElement;
+      if (!slideElement) {
+        throw new Error('Slide element not found');
+      }
+
+      console.log('📸 Exporting slide...');
+      const blob = await exportSlideToImage(slideElement, {
+        quality: getRecommendedQuality(),
+      });
+
+      const success = await shareToSocial(blob, `Strava Wrapped - Slide ${currentSlide + 1}`);
+
+      if (success) {
+        console.log('✅ Export successful!');
+      }
+    } catch (error) {
+      console.error('❌ Export error:', error);
+      alert(`Erreur lors de l'export: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
+
+  return (
+    <main className="min-h-screen bg-strava-dark">
+      {/* Mobile viewport (9:16 aspect ratio) */}
+      <div className="h-screen w-full max-w-[500px] mx-auto relative bg-strava-anthracite shadow-2xl">
+        {!stats && !isLoading && (
+          <FileUpload onFileSelect={handleFileSelect} />
+        )}
+
+        {isLoading && (
+          <div className="h-full flex items-center justify-center p-8">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-strava-orange mx-auto mb-4"></div>
+              <p className="text-white text-xl font-semibold mb-2">Analyse de tes exploits...</p>
+              <p className="text-gray-400 text-sm">Extraction des données du ZIP en cours</p>
+              <p className="text-gray-500 text-xs mt-4">Cela peut prendre quelques secondes pour les gros fichiers</p>
+            </div>
+          </div>
+        )}
+
+        {error && (
+          <div className="h-full flex items-center justify-center p-8">
+            <div className="text-center">
+              <p className="text-red-500 text-xl mb-4">{error}</p>
+              <button
+                onClick={() => {
+                  setError(null);
+                  setStats(null);
+                }}
+                className="bg-strava-orange hover:bg-strava-orange/90 text-white font-semibold py-3 px-6 rounded-full transition-all"
+              >
+                Try Again
+              </button>
+            </div>
+          </div>
+        )}
+
+        {stats && (
+          <div className="slide-container h-full w-full">
+            <AnimatePresence mode="wait">
+              {renderSlide()}
+            </AnimatePresence>
+          </div>
+        )}
+
+        {/* Progress Indicator */}
+        {stats && (
+          <div className="absolute top-4 left-1/2 transform -translate-x-1/2 flex gap-2 z-50 no-export">
+            {Array.from({ length: getTotalSlides() }).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentSlide(i)}
+                className={`h-1 rounded-full transition-all duration-300 cursor-pointer hover:opacity-80 ${
+                  i === currentSlide
+                    ? 'bg-strava-orange w-8'
+                    : 'bg-gray-600 w-1 hover:w-2'
+                }`}
+                aria-label={`Go to slide ${i + 1}`}
+              />
+            ))}
+          </div>
+        )}
+
+
+        {/* Export button - Top Right Corner */}
+        {stats && (
+          <motion.button
+            onClick={handleExportSlide}
+            disabled={isExporting}
+            className="absolute top-6 right-6 z-50 w-14 h-14 rounded-full flex items-center justify-center no-export"
+            style={{
+              background: isExporting
+                ? 'rgba(100, 100, 100, 0.5)'
+                : 'linear-gradient(135deg, #FC4C02 0%, #FF8C00 100%)',
+              boxShadow: '0 4px 20px rgba(252, 76, 2, 0.4)',
+              border: '2px solid rgba(252, 76, 2, 0.6)',
+            }}
+            whileHover={!isExporting ? { scale: 1.1 } : {}}
+            whileTap={!isExporting ? { scale: 0.95 } : {}}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5, type: 'spring', bounce: 0.5 }}
+          >
+            <Camera className="w-6 h-6 text-white" />
+          </motion.button>
+        )}
+      </div>
+    </main>
+  );
+}
+
+// Wrap in ThemeProvider and LanguageProvider
+export default function Home() {
+  return (
+    <LanguageProvider>
+      <ThemeProvider>
+        <HomeContent />
+      </ThemeProvider>
+    </LanguageProvider>
+  );
+}

@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(unzip:*)",
+      "Skill(frontend-design)",
+      "Skill(frontend-design:*)",
+      "Bash(ls:*)",
+      "Bash(npm run build:*)",
+      "Bash(grep:*)"
+    ]
+  }
+}
