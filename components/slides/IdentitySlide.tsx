@@ -72,7 +72,7 @@ export default function IdentitySlide({ data, onNext, onPrevious }: SlideProps) 
         }}
       />
 
-      <div className="relative h-full w-full flex flex-col items-center justify-between slide-container py-8 px-6 safe-top safe-bottom">
+      <div className="relative h-full w-full flex flex-col items-center justify-between slide-container py-4 px-4 safe-top safe-bottom">
         {/* Year Badge - Top */}
         <motion.div
           initial={{ y: -100, opacity: 0 }}
@@ -219,29 +219,50 @@ export default function IdentitySlide({ data, onNext, onPrevious }: SlideProps) 
               />
             </motion.div>
 
-            {/* Location */}
-            {profile.city && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.6, duration: 0.6 }}
-                className="flex items-center justify-center gap-3 mb-6 px-4 py-3 rounded-xl"
+            {/* 2025 Edition Badge */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 1.6, duration: 0.6 }}
+              className="flex items-center justify-center mb-6"
+            >
+              <div
+                className="px-8 py-4 rounded-2xl border-3 relative overflow-hidden"
                 style={{
-                  background: 'rgba(252, 76, 2, 0.05)',
-                  border: '1px solid rgba(252, 76, 2, 0.2)',
+                  borderColor: 'rgba(252, 76, 2, 0.6)',
+                  background: 'linear-gradient(135deg, rgba(252, 76, 2, 0.15) 0%, rgba(252, 76, 2, 0.05) 100%)',
+                  boxShadow: '0 0 40px rgba(252, 76, 2, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+                  border: '3px solid rgba(252, 76, 2, 0.5)',
                 }}
               >
-                <MapPin className="w-5 h-5 text-orange-400" />
-                <div className="text-center">
-                  <p className="text-xl font-bold text-white leading-tight">
-                    {t('slide.identity.readyForRecap')}
-                  </p>
-                  <p className="text-xl font-bold leading-tight" style={{ color: '#FC4C02' }}>
-                    {t('slide.identity.ofYourEpicIn')} {profile.city} ?
-                  </p>
-                </div>
-              </motion.div>
-            )}
+                {/* Shimmer effect */}
+                <motion.div
+                  className="absolute inset-0"
+                  style={{
+                    background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%)',
+                  }}
+                  animate={{
+                    x: ['-200%', '200%'],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    repeatDelay: 1,
+                  }}
+                />
+                <h3
+                  className="relative text-3xl font-black tracking-widest text-center"
+                  style={{
+                    color: '#FC4C02',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.2em',
+                    textShadow: '0 0 30px rgba(252, 76, 2, 0.5)',
+                  }}
+                >
+                  ★ 2025 Edition ★
+                </h3>
+              </div>
+            </motion.div>
 
             {/* Bio */}
             {profile.bio && (

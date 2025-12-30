@@ -48,7 +48,7 @@ export default function IntroSlide({ data, onNext, onPrevious }: SlideProps) {
         }}
       />
 
-      <div className="relative h-full w-full flex flex-col items-center justify-between slide-container py-8 px-6 safe-top safe-bottom">
+      <div className="relative h-full w-full flex flex-col items-center justify-between slide-container py-4 px-4 safe-top safe-bottom">
         {/* Header with year badge */}
         <motion.div
           initial={{ y: -50, opacity: 0 }}

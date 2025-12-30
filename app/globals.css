@@ -65,6 +65,35 @@ body {
     }
   }
 
+  /* Mobile-first: ultra-compact layout to fit entire page */
+  .slide-container {
+    padding: 0.75rem !important; /* Reduced from py-8 px-6 */
+  }
+
+  .slide-header {
+    margin-bottom: 0.5rem !important; /* Reduced from mb-4 */
+  }
+
+  .slide-icon-container {
+    width: 3rem !important; /* 48px - Reduced from w-16 */
+    height: 3rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .slide-icon {
+    width: 1.5rem !important; /* 24px - Reduced from w-8 */
+    height: 1.5rem !important;
+  }
+
+  .slide-title {
+    font-size: 1.5rem !important; /* text-2xl - Reduced from text-3xl */
+    margin-bottom: 0.25rem !important;
+  }
+
+  .slide-subtitle {
+    font-size: 0.625rem !important; /* text-[10px] - Reduced from text-xs */
+  }
+
   /* Responsive slide container - adapts based on screen size */
   @media (min-width: 768px) {
     /* Desktop: restore original spacious layout */

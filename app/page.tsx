@@ -2,7 +2,6 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Camera } from 'lucide-react';
 import FileUpload from '@/components/upload/FileUpload';
 import IdentitySlide from '@/components/slides/IdentitySlide';
 import IntroSlide from '@/components/slides/IntroSlide';
@@ -346,28 +345,6 @@ function HomeContent() {
         )}
 
 
-        {/* Export button - Top Right Corner */}
-        {stats && (
-          <motion.button
-            onClick={handleExportSlide}
-            disabled={isExporting}
-            className="absolute top-6 right-6 z-50 w-14 h-14 rounded-full flex items-center justify-center no-export"
-            style={{
-              background: isExporting
-                ? 'rgba(100, 100, 100, 0.5)'
-                : 'linear-gradient(135deg, #FC4C02 0%, #FF8C00 100%)',
-              boxShadow: '0 4px 20px rgba(252, 76, 2, 0.4)',
-              border: '2px solid rgba(252, 76, 2, 0.6)',
-            }}
-            whileHover={!isExporting ? { scale: 1.1 } : {}}
-            whileTap={!isExporting ? { scale: 0.95 } : {}}
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.5, type: 'spring', bounce: 0.5 }}
-          >
-            <Camera className="w-6 h-6 text-white" />
-          </motion.button>
-        )}
       </div>
     </main>
   );
