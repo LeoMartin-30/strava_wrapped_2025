@@ -5,9 +5,11 @@ import { SlideProps } from '@/types';
 import AnimatedCounter from '../AnimatedCounter';
 import { Activity, TrendingUp, Mountain } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { detectDominance } from '@/lib/dominanceDetector';
 
 export default function IntroSlide({ data, onNext, onPrevious }: SlideProps) {
   const { t } = useLanguage();
+  const dominance = detectDominance(data);
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -90,6 +92,27 @@ export default function IntroSlide({ data, onNext, onPrevious }: SlideProps) {
                 ★ 2025 ★
               </span>
             </div>
+          </motion.div>
+
+          {/* Dynamic Profile Badge */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5, duration: 0.6 }}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-3"
+            style={{
+              background: `linear-gradient(135deg, ${dominance.theme.colors.primary}20 0%, ${dominance.theme.colors.primary}08 100%)`,
+              border: `1px solid ${dominance.theme.colors.primary}50`,
+              boxShadow: `0 0 20px ${dominance.theme.colors.primary}30`,
+            }}
+          >
+            <span className="text-sm">{dominance.theme.badge.emoji}</span>
+            <span
+              className="text-[10px] font-bold tracking-wider uppercase"
+              style={{ color: dominance.theme.colors.secondary }}
+            >
+              {dominance.theme.badge.label}
+            </span>
           </motion.div>
 
           <motion.h1

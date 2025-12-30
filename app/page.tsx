@@ -31,6 +31,7 @@ import { detectDominance } from '@/lib/dominanceDetector';
 import { exportSlideToImage, shareToSocial, getRecommendedQuality } from '@/lib/exportStories';
 import { shouldShowSlide } from '@/lib/fallbackRules';
 import { ProcessedStats } from '@/types';
+import { trackZipUpload, trackFunnelStep, trackConversionComplete, trackError } from '@/lib/analytics';
 
 function HomeContent() {
   const { applyTheme } = useTheme();
@@ -46,6 +47,9 @@ function HomeContent() {
     setError(null);
 
     try {
+      // Track zip upload
+      trackZipUpload(file.name, file.size);
+
       // Hardcoded year for Strava Wrapped 2025
       const year = 2025;
 
@@ -87,39 +91,53 @@ function HomeContent() {
       applyTheme(dominance.theme);
 
       setCurrentSlide(0);
+
+      // Track first funnel step (Intro slide)
+      trackFunnelStep(0, 'Intro');
     } catch (err) {
       console.error('Error processing file:', err);
-      setError(err instanceof Error ? err.message : 'Impossible de traiter le fichier');
+      const errorMessage = err instanceof Error ? err.message : 'Impossible de traiter le fichier';
+      setError(errorMessage);
+
+      // Track error
+      trackError('File Processing', errorMessage);
     } finally {
       setIsLoading(false);
     }
-  }, [applyTheme]);
+  }, [applyTheme, t]);
+
+  // Helper function to get slide names in order
+  const getSlideNames = useCallback(() => {
+    if (!stats) return [];
+    const names = [];
+
+    names.push('Intro');
+    if (stats.profile) names.push('Identity');
+    if (Object.keys(stats.activitiesByType).length > 1) names.push('Activity Breakdown');
+    if (shouldShowSlide('IntensitySlide', stats)) names.push('Intensity');
+    if (shouldShowSlide('PowerSlide', stats)) names.push('Power');
+    names.push('Elevation');
+    if (shouldShowSlide('GravitySlide', stats)) names.push('Gravity');
+    if (shouldShowSlide('TrailSlide', stats)) names.push('Trail');
+    if (shouldShowSlide('CalorieSlide', stats)) names.push('Calories');
+    if (Object.keys(stats.activitiesByMonth).length > 0) names.push('Chronos Month');
+    if (Object.keys(stats.activitiesByDayOfWeek).length > 0) names.push('Chronos Day');
+    names.push('Chronos');
+    if (shouldShowSlide('WeatherSlide', stats)) names.push('Weather');
+    if (stats.comments.length > 0 || stats.social.totalKudos > 0) names.push('Kudos');
+    if (shouldShowSlide('MoteurSlide', stats)) names.push('Moteur');
+    if (shouldShowSlide('SocialButterflySlide', stats)) names.push('Social Butterfly');
+    names.push('Consistency');
+    names.push('Records');
+    names.push('Summary');
+
+    return names;
+  }, [stats]);
 
   // Helper function to get total slides count
   const getTotalSlides = useCallback(() => {
-    if (!stats) return 0;
-    return (
-      1 + // intro (dashboard/tableau de bord)
-      (stats.profile ? 1 : 0) + // identity (if profile exists)
-      (Object.keys(stats.activitiesByType).length > 1 ? 1 : 0) + // activity breakdown
-      (shouldShowSlide('IntensitySlide', stats) ? 1 : 0) + // intensity (with fallback)
-      (shouldShowSlide('PowerSlide', stats) ? 1 : 0) + // power (with fallback)
-      1 + // elevation
-      (shouldShowSlide('GravitySlide', stats) ? 1 : 0) + // gravity slide (with fallback)
-      (shouldShowSlide('TrailSlide', stats) ? 1 : 0) + // trail factor (with fallback)
-      (shouldShowSlide('CalorieSlide', stats) ? 1 : 0) + // calorie converter (with fallback)
-      (Object.keys(stats.activitiesByMonth).length > 0 ? 1 : 0) + // chronos month
-      (Object.keys(stats.activitiesByDayOfWeek).length > 0 ? 1 : 0) + // chronos day of week
-      1 + // chronos time of day (5 periods now)
-      (shouldShowSlide('WeatherSlide', stats) ? 1 : 0) + // weather (with fallback >= 5 activities)
-      (stats.comments.length > 0 || stats.social.totalKudos > 0 ? 1 : 0) + // kudos
-      (shouldShowSlide('MoteurSlide', stats) ? 1 : 0) + // moteur (with fallback)
-      (shouldShowSlide('SocialButterflySlide', stats) ? 1 : 0) + // social butterfly (with fallback)
-      1 + // consistency
-      1 + // records
-      1 // summary
-    );
-  }, [stats]);
+    return getSlideNames().length;
+  }, [getSlideNames]);
 
   const handleNext = useCallback(() => {
     if (!stats) return;
@@ -128,13 +146,22 @@ function HomeContent() {
     const nextIndex = currentSlide + 1;
 
     if (nextIndex >= totalSlides) {
+      // Track conversion complete before resetting
+      trackConversionComplete(totalSlides, stats.totalActivities);
+
       // Reset to upload screen
       setStats(null);
       setCurrentSlide(0);
     } else {
       setCurrentSlide(nextIndex);
+
+      // Track funnel step
+      const slideNames = getSlideNames();
+      if (slideNames[nextIndex]) {
+        trackFunnelStep(nextIndex, slideNames[nextIndex]);
+      }
     }
-  }, [currentSlide, stats, getTotalSlides]);
+  }, [currentSlide, stats, getTotalSlides, getSlideNames]);
 
   const handlePrevious = useCallback(() => {
     if (!stats) return;
@@ -143,6 +170,32 @@ function HomeContent() {
       setCurrentSlide(currentSlide - 1);
     }
   }, [currentSlide, stats]);
+
+  // Handle left/right tap navigation on mobile
+  const handleTapNavigation = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (!stats) return;
+
+    const target = e.currentTarget;
+    const rect = target.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const width = rect.width;
+
+    // Don't interfere with progress indicator clicks
+    if ((e.target as HTMLElement).closest('.no-export')) {
+      return;
+    }
+
+    // Prevent the slide's onClick from also firing
+    e.preventDefault();
+    e.stopPropagation();
+
+    // Left third of screen = previous, right two-thirds = next
+    if (clickX < width / 3) {
+      handlePrevious();
+    } else {
+      handleNext();
+    }
+  }, [stats, handleNext, handlePrevious]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -319,7 +372,10 @@ function HomeContent() {
         )}
 
         {stats && (
-          <div className="slide-container h-full w-full">
+          <div
+            className="slide-container h-full w-full cursor-pointer"
+            onClickCapture={handleTapNavigation}
+          >
             <AnimatePresence mode="wait">
               {renderSlide()}
             </AnimatePresence>
