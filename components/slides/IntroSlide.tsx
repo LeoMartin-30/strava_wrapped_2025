@@ -48,19 +48,19 @@ export default function IntroSlide({ data, onNext, onPrevious }: SlideProps) {
         }}
       />
 
-      <div className="relative h-full w-full flex flex-col items-center justify-center p-6">
+      <div className="relative h-full w-full flex flex-col items-center justify-between slide-container py-8 px-6 safe-top safe-bottom">
         {/* Header with year badge */}
         <motion.div
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.8 }}
-          className="text-center mb-8"
+          className="text-center mb-4 slide-header"
         >
           <motion.div
             initial={{ scale: 0.5, rotate: -180 }}
             animate={{ scale: 1, rotate: 0 }}
             transition={{ delay: 0.4, duration: 1, type: 'spring', bounce: 0.3 }}
-            className="inline-block mb-4"
+            className="inline-block mb-3"
           >
             <div
               className="px-8 py-3 rounded-full border-2 relative overflow-hidden"
@@ -96,7 +96,7 @@ export default function IntroSlide({ data, onNext, onPrevious }: SlideProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.6 }}
-            className="text-4xl font-black mb-3"
+            className="text-3xl font-black mb-2"
             style={{
               background: 'linear-gradient(to bottom, #ffffff 0%, #e0e0e0 100%)',
               WebkitBackgroundClip: 'text',
@@ -111,14 +111,14 @@ export default function IntroSlide({ data, onNext, onPrevious }: SlideProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8, duration: 0.6 }}
-            className="text-gray-400 text-sm tracking-wide"
+            className="text-gray-400 text-xs tracking-wide"
           >
             {t('slide.intro.subtitle')}
           </motion.p>
         </motion.div>
 
         {/* Stats Grid - 3 analog meters */}
-        <div className="w-full max-w-sm space-y-4">
+        <div className="w-full max-w-sm space-y-3 flex-1 flex flex-col justify-center">
           {/* Activities Counter */}
           <motion.div
             initial={{ scale: 0.8, opacity: 0, rotateY: -20 }}
@@ -127,7 +127,7 @@ export default function IntroSlide({ data, onNext, onPrevious }: SlideProps) {
             className="relative"
           >
             <div
-              className="p-6 rounded-2xl relative overflow-hidden"
+              className="p-4 rounded-2xl relative overflow-hidden"
               style={{
                 background: 'linear-gradient(135deg, rgba(252, 76, 2, 0.15) 0%, rgba(252, 76, 2, 0.05) 100%)',
                 border: '2px solid rgba(252, 76, 2, 0.3)',
@@ -135,35 +135,35 @@ export default function IntroSlide({ data, onNext, onPrevious }: SlideProps) {
               }}
             >
               {/* Corner accent */}
-              <div className="absolute top-0 right-0 w-20 h-20 opacity-20">
+              <div className="absolute top-0 right-0 w-16 h-16 opacity-20">
                 <svg viewBox="0 0 100 100">
                   <path d="M100,0 L100,100 L0,100 Z" fill="#FC4C02" />
                 </svg>
               </div>
 
-              <div className="relative flex items-center gap-4">
+              <div className="relative flex items-center gap-3">
                 <motion.div
                   animate={{ rotate: [0, 10, -10, 0] }}
                   transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
                   className="flex-shrink-0"
                 >
                   <div
-                    className="w-14 h-14 rounded-full flex items-center justify-center"
+                    className="w-12 h-12 rounded-full flex items-center justify-center"
                     style={{
                       background: 'rgba(252, 76, 2, 0.2)',
                       border: '2px solid rgba(252, 76, 2, 0.5)',
                     }}
                   >
-                    <Activity className="w-7 h-7 text-orange-400" />
+                    <Activity className="w-6 h-6 text-orange-400" />
                   </div>
                 </motion.div>
 
-                <div className="flex-1">
-                  <div className="text-xs font-bold tracking-widest text-orange-400 uppercase mb-1">
+                <div className="flex-1 min-w-0">
+                  <div className="text-[10px] font-bold tracking-widest text-orange-400 uppercase mb-0.5">
                     {t('slide.intro.activities')}
                   </div>
                   <div
-                    className="text-5xl font-black tracking-tight"
+                    className="text-4xl font-black tracking-tight"
                     style={{
                       color: '#FC4C02',
                       textShadow: '0 2px 20px rgba(252, 76, 2, 0.5)',
@@ -171,7 +171,7 @@ export default function IntroSlide({ data, onNext, onPrevious }: SlideProps) {
                   >
                     <AnimatedCounter to={data.totalActivities} duration={2} delay={1.2} />
                   </div>
-                  <div className="text-xs text-gray-500 mt-1">{t('slide.intro.activitiesDesc')}</div>
+                  <div className="text-[10px] text-gray-500 mt-0.5">{t('slide.intro.activitiesDesc')}</div>
                 </div>
               </div>
             </div>
@@ -185,7 +185,7 @@ export default function IntroSlide({ data, onNext, onPrevious }: SlideProps) {
             className="relative"
           >
             <div
-              className="p-6 rounded-2xl relative overflow-hidden"
+              className="p-4 rounded-2xl relative overflow-hidden"
               style={{
                 background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%)',
                 border: '2px solid rgba(255, 255, 255, 0.1)',
@@ -202,36 +202,36 @@ export default function IntroSlide({ data, onNext, onPrevious }: SlideProps) {
                 transition={{ duration: 3, repeat: Infinity, repeatDelay: 2 }}
               />
 
-              <div className="relative flex items-center gap-4">
+              <div className="relative flex items-center gap-3">
                 <motion.div
                   animate={{ y: [0, -5, 0] }}
                   transition={{ duration: 2, repeat: Infinity, repeatDelay: 2 }}
                   className="flex-shrink-0"
                 >
                   <div
-                    className="w-14 h-14 rounded-full flex items-center justify-center"
+                    className="w-12 h-12 rounded-full flex items-center justify-center"
                     style={{
                       background: 'rgba(255, 255, 255, 0.1)',
                       border: '2px solid rgba(255, 255, 255, 0.2)',
                     }}
                   >
-                    <TrendingUp className="w-7 h-7 text-blue-400" />
+                    <TrendingUp className="w-6 h-6 text-blue-400" />
                   </div>
                 </motion.div>
 
-                <div className="flex-1">
-                  <div className="text-xs font-bold tracking-widest text-blue-300 uppercase mb-1">
+                <div className="flex-1 min-w-0">
+                  <div className="text-[10px] font-bold tracking-widest text-blue-300 uppercase mb-0.5">
                     {t('slide.intro.distance')}
                   </div>
                   <div
-                    className="text-5xl font-black tracking-tight text-white"
+                    className="text-4xl font-black tracking-tight text-white"
                     style={{
                       textShadow: '0 2px 20px rgba(96, 165, 250, 0.3)',
                     }}
                   >
                     <AnimatedCounter to={data.totalDistance} duration={2} delay={1.4} />
                   </div>
-                  <div className="text-xs text-gray-500 mt-1">{t('slide.intro.distanceDesc')}</div>
+                  <div className="text-[10px] text-gray-500 mt-0.5">{t('slide.intro.distanceDesc')}</div>
                 </div>
               </div>
             </div>
@@ -245,43 +245,43 @@ export default function IntroSlide({ data, onNext, onPrevious }: SlideProps) {
             className="relative"
           >
             <div
-              className="p-6 rounded-2xl relative overflow-hidden"
+              className="p-4 rounded-2xl relative overflow-hidden"
               style={{
                 background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.12) 0%, rgba(34, 197, 94, 0.03) 100%)',
                 border: '2px solid rgba(34, 197, 94, 0.2)',
                 boxShadow: '0 8px 32px rgba(34, 197, 94, 0.15), inset 0 1px 0 rgba(34, 197, 94, 0.2)',
               }}
             >
-              <div className="relative flex items-center gap-4">
+              <div className="relative flex items-center gap-3">
                 <motion.div
                   animate={{ scale: [1, 1.1, 1] }}
                   transition={{ duration: 2, repeat: Infinity, repeatDelay: 2 }}
                   className="flex-shrink-0"
                 >
                   <div
-                    className="w-14 h-14 rounded-full flex items-center justify-center"
+                    className="w-12 h-12 rounded-full flex items-center justify-center"
                     style={{
                       background: 'rgba(34, 197, 94, 0.15)',
                       border: '2px solid rgba(34, 197, 94, 0.3)',
                     }}
                   >
-                    <Mountain className="w-7 h-7 text-green-400" />
+                    <Mountain className="w-6 h-6 text-green-400" />
                   </div>
                 </motion.div>
 
-                <div className="flex-1">
-                  <div className="text-xs font-bold tracking-widest text-green-400 uppercase mb-1">
+                <div className="flex-1 min-w-0">
+                  <div className="text-[10px] font-bold tracking-widest text-green-400 uppercase mb-0.5">
                     {t('slide.intro.elevation')}
                   </div>
                   <div
-                    className="text-5xl font-black tracking-tight text-white"
+                    className="text-4xl font-black tracking-tight text-white"
                     style={{
                       textShadow: '0 2px 20px rgba(34, 197, 94, 0.3)',
                     }}
                   >
                     <AnimatedCounter to={data.totalElevation} duration={2} delay={1.6} />
                   </div>
-                  <div className="text-xs text-gray-500 mt-1">{t('slide.intro.elevationDesc')}</div>
+                  <div className="text-[10px] text-gray-500 mt-0.5">{t('slide.intro.elevationDesc')}</div>
                 </div>
               </div>
             </div>
@@ -293,11 +293,11 @@ export default function IntroSlide({ data, onNext, onPrevious }: SlideProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 2, duration: 0.8 }}
-          className="mt-8 text-center"
+          className="mt-4 text-center"
         >
-          <p className="text-gray-400 text-base mb-1">{t('slide.intro.message1')}</p>
+          <p className="text-gray-400 text-sm mb-1">{t('slide.intro.message1')}</p>
           <p
-            className="text-2xl font-black tracking-tight"
+            className="text-xl font-black tracking-tight"
             style={{
               background: 'linear-gradient(90deg, #FC4C02 0%, #FF8C00 100%)',
               WebkitBackgroundClip: 'text',
@@ -308,24 +308,6 @@ export default function IntroSlide({ data, onNext, onPrevious }: SlideProps) {
           </p>
         </motion.div>
 
-        {/* Bottom indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2.5, duration: 0.8 }}
-          className="absolute bottom-6 right-6"
-        >
-          <motion.div
-            animate={{ y: [0, -8, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            className="flex flex-col items-center gap-2"
-          >
-            <div className="text-gray-600 text-xs tracking-widest uppercase font-semibold">
-              {t('slide.intro.swipeToContinue')}
-            </div>
-            <div className="w-1 h-8 bg-gradient-to-b from-orange-500 to-transparent rounded-full" />
-          </motion.div>
-        </motion.div>
       </div>
     </motion.div>
   );

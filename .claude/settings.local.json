@@ -6,7 +6,12 @@
       "Skill(frontend-design:*)",
       "Bash(ls:*)",
       "Bash(npm run build:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(chmod:*)",
+      "Bash(/Users/leomartin/Strava_Wrapped/add_responsive_classes.sh)",
+      "Bash(/Users/leomartin/Strava_Wrapped/add_icon_classes.sh)",
+      "Bash(paste:*)",
+      "Bash(for class in \"slide-container\" \"slide-header\" \"slide-icon-container\" \"slide-icon\" \"slide-title\" \"slide-subtitle\")"
     ]
   }
 }

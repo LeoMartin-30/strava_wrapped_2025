@@ -67,7 +67,7 @@ export default function ChronosMonthSlide({ data, onNext, onPrevious }: SlidePro
         }}
       />
 
-      <div className="relative h-full w-full flex flex-col items-center justify-center p-6">
+      <div className="relative h-full w-full flex flex-col items-center justify-between slide-container py-8 px-6 safe-top safe-bottom">
         {/* Header */}
         <motion.div
           initial={{ y: -50, opacity: 0 }}
@@ -94,12 +94,12 @@ export default function ChronosMonthSlide({ data, onNext, onPrevious }: SlidePro
                 boxShadow: '0 0 30px rgba(99, 102, 241, 0.3), inset 0 0 15px rgba(99, 102, 241, 0.15)',
               }}
             >
-              <Calendar className="w-8 h-8 text-blue-400" />
+              <Calendar className="w-8 h-8 text-blue-400 slide-icon" />
             </div>
           </motion.div>
 
           <h2
-            className="text-3xl font-black mb-1"
+            className="text-3xl font-black mb-1.5 slide-title"
             style={{
               background: 'linear-gradient(90deg, #6366F1 0%, #34D399 25%, #FBBF24 50%, #F97316 100%)',
               WebkitBackgroundClip: 'text',
@@ -110,7 +110,7 @@ export default function ChronosMonthSlide({ data, onNext, onPrevious }: SlidePro
           >
             {t('slide.chronosMonth.title')}
           </h2>
-          <p className="text-xs text-gray-400 tracking-wide">{t('slide.chronosMonth.subtitle')}</p>
+          <p className="text-xs text-gray-400 tracking-wide slide-subtitle">{t('slide.chronosMonth.subtitle')}</p>
         </motion.div>
 
         {/* All 12 months in a compact grid */}
@@ -253,22 +253,6 @@ export default function ChronosMonthSlide({ data, onNext, onPrevious }: SlidePro
               </div>
             </div>
           </div>
-        </motion.div>
-
-        {/* Bottom right indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2.5, duration: 0.8 }}
-          className="absolute bottom-6 right-6"
-        >
-          <motion.div
-            animate={{ y: [0, -8, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            className="text-gray-600 text-xs tracking-widest uppercase font-semibold"
-          >
-            {t('common.tapToContinue')}
-          </motion.div>
         </motion.div>
       </div>
     </motion.div>

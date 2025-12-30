@@ -72,7 +72,7 @@ export default function IdentitySlide({ data, onNext, onPrevious }: SlideProps) 
         }}
       />
 
-      <div className="relative h-full w-full flex flex-col items-center justify-center p-8">
+      <div className="relative h-full w-full flex flex-col items-center justify-between slide-container py-8 px-6 safe-top safe-bottom">
         {/* Year Badge - Top */}
         <motion.div
           initial={{ y: -100, opacity: 0 }}
@@ -128,7 +128,7 @@ export default function IdentitySlide({ data, onNext, onPrevious }: SlideProps) 
         >
           {/* Card */}
           <div
-            className="relative p-8 rounded-3xl overflow-hidden"
+            className="relative p-6 rounded-3xl overflow-hidden"
             style={{
               background: 'linear-gradient(135deg, rgba(30, 35, 45, 0.9) 0%, rgba(20, 25, 35, 0.9) 100%)',
               border: '2px solid rgba(252, 76, 2, 0.3)',
@@ -163,7 +163,7 @@ export default function IdentitySlide({ data, onNext, onPrevious }: SlideProps) 
             >
               <div className="flex items-center justify-center gap-2 mb-2">
                 <div className="w-8 h-0.5 bg-gradient-to-r from-transparent via-orange-500 to-transparent" />
-                <span className="text-xs font-black tracking-widest text-orange-400 uppercase opacity-70">
+                <span className="text-[10px] font-black tracking-widest text-orange-400 uppercase opacity-70">
                   {t('slide.identity.certifiedAthlete')}
                 </span>
                 <div className="w-8 h-0.5 bg-gradient-to-r from-transparent via-orange-500 to-transparent" />
@@ -178,7 +178,7 @@ export default function IdentitySlide({ data, onNext, onPrevious }: SlideProps) 
               className="text-center mb-6"
             >
               <h1
-                className="text-6xl font-black tracking-tight leading-none mb-2"
+                className="text-5xl font-black tracking-tight leading-none mb-2"
                 style={{
                   fontFamily: 'system-ui, -apple-system, sans-serif',
                   textTransform: 'uppercase',
@@ -195,7 +195,7 @@ export default function IdentitySlide({ data, onNext, onPrevious }: SlideProps) 
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 1.2, duration: 0.6 }}
-                className="text-5xl font-black mb-1"
+                className="text-4xl font-black mb-1"
                 style={{
                   fontFamily: 'system-ui, -apple-system, sans-serif',
                   color: '#FC4C02',
@@ -284,30 +284,6 @@ export default function IdentitySlide({ data, onNext, onPrevious }: SlideProps) 
           </div>
         </motion.div>
 
-        {/* Bottom instruction */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2.2, duration: 0.8 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        >
-          <motion.div
-            animate={{
-              y: [0, -8, 0],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-            className="flex flex-col items-center gap-2"
-          >
-            <div className="text-gray-500 text-xs tracking-widest uppercase font-semibold">
-              {t('slide.identity.tapToStart')}
-            </div>
-            <div className="w-1 h-8 bg-gradient-to-b from-orange-500 to-transparent rounded-full" />
-          </motion.div>
-        </motion.div>
       </div>
     </motion.div>
   );

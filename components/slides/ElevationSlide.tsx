@@ -81,13 +81,13 @@ export default function ElevationSlide({ data, onNext, onPrevious }: SlideProps)
         </motion.div>
       ))}
 
-      <div className="relative h-full w-full flex flex-col items-center justify-center p-6">
+      <div className="relative h-full w-full flex flex-col items-center justify-between slide-container py-8 px-6 safe-top safe-bottom">
         {/* Header */}
         <motion.div
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.8 }}
-          className="text-center mb-8"
+          className="text-center mb-4 slide-header"
         >
           <motion.div
             animate={{
@@ -98,22 +98,22 @@ export default function ElevationSlide({ data, onNext, onPrevious }: SlideProps)
               repeat: Infinity,
               ease: 'easeInOut',
             }}
-            className="inline-block mb-4"
+            className="inline-block mb-3"
           >
             <div
-              className="w-20 h-20 rounded-full flex items-center justify-center"
+              className="w-16 h-16 rounded-full flex items-center justify-center slide-icon-container"
               style={{
                 background: 'radial-gradient(circle, rgba(34, 197, 94, 0.3) 0%, rgba(34, 197, 94, 0.1) 100%)',
                 border: '3px solid rgba(34, 197, 94, 0.5)',
                 boxShadow: '0 0 40px rgba(34, 197, 94, 0.3), inset 0 0 20px rgba(34, 197, 94, 0.2)',
               }}
             >
-              <Mountain className="w-10 h-10 text-green-400" />
+              <Mountain className="w-8 h-8 text-green-400 slide-icon" />
             </div>
           </motion.div>
 
           <h2
-            className="text-4xl font-black mb-2"
+            className="text-3xl font-black mb-1.5 slide-title"
             style={{
               background: 'linear-gradient(to bottom, #ffffff 0%, #e0e0e0 100%)',
               WebkitBackgroundClip: 'text',
@@ -124,7 +124,7 @@ export default function ElevationSlide({ data, onNext, onPrevious }: SlideProps)
           >
             {t('slide.elevation.title')}
           </h2>
-          <p className="text-sm text-gray-400 tracking-wide">{t('slide.elevation.subtitle')}</p>
+          <p className="text-xs text-gray-400 tracking-wide slide-subtitle">{t('slide.elevation.subtitle')}</p>
         </motion.div>
 
         {/* Total Elevation */}
@@ -132,10 +132,10 @@ export default function ElevationSlide({ data, onNext, onPrevious }: SlideProps)
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 0.6, duration: 0.8, type: 'spring' }}
-          className="w-full max-w-sm mb-6"
+          className="w-full max-w-sm flex-1 flex flex-col justify-center"
         >
           <div
-            className="p-8 rounded-2xl relative overflow-hidden"
+            className="p-6 rounded-2xl relative overflow-hidden"
             style={{
               background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.05) 100%)',
               border: '2px solid rgba(34, 197, 94, 0.3)',
@@ -159,12 +159,12 @@ export default function ElevationSlide({ data, onNext, onPrevious }: SlideProps)
             />
 
             <div className="relative text-center">
-              <div className="flex items-center justify-center gap-2 mb-2">
-                <TrendingUp className="w-5 h-5 text-green-400" />
-                <div className="text-xs text-green-400 uppercase tracking-wider font-bold">{t('slide.elevation.elevationGain')}</div>
+              <div className="flex items-center justify-center gap-2 mb-1.5">
+                <TrendingUp className="w-4 h-4 text-green-400" />
+                <div className="text-[10px] text-green-400 uppercase tracking-wider font-bold">{t('slide.elevation.elevationGain')}</div>
               </div>
               <div
-                className="text-7xl font-black mb-2"
+                className="text-6xl font-black mb-1.5"
                 style={{
                   color: '#22C55E',
                   textShadow: '0 2px 30px rgba(34, 197, 94, 0.6)',
@@ -172,7 +172,7 @@ export default function ElevationSlide({ data, onNext, onPrevious }: SlideProps)
               >
                 <AnimatedCounter to={totalElevation} duration={2.5} delay={0.8} />
               </div>
-              <div className="text-lg text-gray-300 font-semibold">
+              <div className="text-base text-gray-300 font-semibold">
                 {t('slide.elevation.metersClimbed')}
               </div>
             </div>
@@ -187,7 +187,7 @@ export default function ElevationSlide({ data, onNext, onPrevious }: SlideProps)
           className="w-full max-w-sm"
         >
           <div
-            className="p-8 rounded-2xl relative overflow-hidden"
+            className="p-6 rounded-2xl relative overflow-hidden"
             style={{
               background: 'linear-gradient(135deg, rgba(252, 76, 2, 0.12) 0%, rgba(252, 76, 2, 0.03) 100%)',
               border: '2px solid rgba(252, 76, 2, 0.25)',
@@ -204,15 +204,15 @@ export default function ElevationSlide({ data, onNext, onPrevious }: SlideProps)
                   repeat: Infinity,
                   repeatDelay: 1,
                 }}
-                className="text-6xl mb-3"
+                className="text-5xl mb-2"
               >
                 {comparison.emoji}
               </motion.div>
-              <div className="text-xs text-gray-500 uppercase tracking-wider mb-2">
+              <div className="text-[10px] text-gray-500 uppercase tracking-wider mb-1.5">
                 {t('slide.elevation.equivalentTo')}
               </div>
               <div
-                className="text-5xl font-black mb-2"
+                className="text-4xl font-black mb-1.5"
                 style={{
                   background: 'linear-gradient(135deg, #FC4C02 0%, #FF8C00 100%)',
                   WebkitBackgroundClip: 'text',
@@ -221,44 +221,16 @@ export default function ElevationSlide({ data, onNext, onPrevious }: SlideProps)
               >
                 <AnimatedCounter to={parseFloat(ratio)} decimals={1} duration={1.5} delay={1.4} />×
               </div>
-              <div className="text-2xl font-bold text-white mb-1">
+              <div className="text-xl font-bold text-white mb-0.5">
                 {comparison.name}
               </div>
-              <div className="text-xs text-gray-600">
+              <div className="text-[10px] text-gray-600">
                 ({comparison.height}m)
               </div>
             </div>
           </div>
         </motion.div>
 
-        {/* Mountain message */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 2, duration: 0.6 }}
-          className="mt-6 text-center"
-        >
-          <p className="text-sm text-gray-500 italic flex items-center gap-2 justify-center">
-            <Mountain className="w-4 h-4 text-green-400" />
-            {t('slide.elevation.message')}
-          </p>
-        </motion.div>
-
-        {/* Bottom indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2.5, duration: 0.8 }}
-          className="absolute bottom-6 right-6"
-        >
-          <motion.div
-            animate={{ y: [0, -8, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            className="text-gray-600 text-xs tracking-widest uppercase font-semibold"
-          >
-            {t('slide.elevation.tapToContinue')}
-          </motion.div>
-        </motion.div>
       </div>
     </motion.div>
   );

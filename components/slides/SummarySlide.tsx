@@ -192,7 +192,7 @@ export default function SummarySlide({ data, onNext, onPrevious }: SlideProps) {
         </motion.div>
       ))}
 
-      <div className="relative h-full w-full flex flex-col items-center justify-center p-6">
+      <div className="relative h-full w-full flex flex-col items-center justify-between slide-container py-8 px-6 safe-top safe-bottom">
         {/* Trophy Icon Header */}
         <motion.div
           initial={{ scale: 0, rotate: -180 }}
@@ -253,7 +253,7 @@ export default function SummarySlide({ data, onNext, onPrevious }: SlideProps) {
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.6, duration: 0.8 }}
-          className="text-center mb-8"
+          className="text-center mb-4 slide-header"
         >
           <h2
             className="text-5xl font-black mb-3"
@@ -280,7 +280,7 @@ export default function SummarySlide({ data, onNext, onPrevious }: SlideProps) {
             className="relative"
           >
             <div
-              className="p-6 rounded-2xl relative overflow-hidden"
+              className="p-4 rounded-2xl relative overflow-hidden"
               style={{
                 background: 'linear-gradient(135deg, rgba(252, 76, 2, 0.15) 0%, rgba(252, 76, 2, 0.05) 100%)',
                 border: '2px solid rgba(252, 76, 2, 0.3)',
@@ -305,7 +305,7 @@ export default function SummarySlide({ data, onNext, onPrevious }: SlideProps) {
 
               <div className="relative text-center">
                 <div
-                  className="text-6xl font-black mb-2"
+                  className="text-5xl font-black mb-2"
                   style={{
                     color: '#FC4C02',
                     textShadow: '0 2px 30px rgba(252, 76, 2, 0.6)',
@@ -326,7 +326,7 @@ export default function SummarySlide({ data, onNext, onPrevious }: SlideProps) {
             className="relative"
           >
             <div
-              className="p-6 rounded-2xl relative overflow-hidden"
+              className="p-4 rounded-2xl relative overflow-hidden"
               style={{
                 background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%)',
                 border: '2px solid rgba(255, 255, 255, 0.1)',
@@ -345,7 +345,7 @@ export default function SummarySlide({ data, onNext, onPrevious }: SlideProps) {
 
               <div className="relative text-center">
                 <div
-                  className="text-6xl font-black mb-2 text-white"
+                  className="text-5xl font-black mb-2 text-white"
                   style={{
                     textShadow: '0 2px 20px rgba(255, 255, 255, 0.3)',
                   }}
@@ -365,7 +365,7 @@ export default function SummarySlide({ data, onNext, onPrevious }: SlideProps) {
             className="relative"
           >
             <div
-              className="p-6 rounded-2xl relative overflow-hidden"
+              className="p-4 rounded-2xl relative overflow-hidden"
               style={{
                 background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.12) 0%, rgba(34, 197, 94, 0.03) 100%)',
                 border: '2px solid rgba(34, 197, 94, 0.3)',
@@ -408,7 +408,7 @@ export default function SummarySlide({ data, onNext, onPrevious }: SlideProps) {
                       border: '2px solid rgba(34, 197, 94, 0.5)',
                     }}
                   >
-                    <Star className="w-8 h-8 text-green-400" />
+                    <Star className="w-8 h-8 text-green-400 slide-icon" />
                   </div>
                 </motion.div>
 

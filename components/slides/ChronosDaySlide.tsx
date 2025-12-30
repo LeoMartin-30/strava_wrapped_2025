@@ -110,13 +110,13 @@ export default function ChronosDaySlide({ data, onNext, onPrevious }: SlideProps
         }}
       />
 
-      <div className="relative h-full w-full flex flex-col items-center justify-center p-6">
+      <div className="relative h-full w-full flex flex-col items-center justify-between slide-container py-8 px-6 safe-top safe-bottom">
         {/* Header */}
         <motion.div
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.8 }}
-          className="text-center mb-8"
+          className="text-center mb-4 slide-header"
         >
           <motion.div
             animate={{
@@ -127,7 +127,7 @@ export default function ChronosDaySlide({ data, onNext, onPrevious }: SlideProps
               repeat: Infinity,
               ease: 'easeInOut',
             }}
-            className="inline-block mb-4"
+            className="inline-block mb-3"
           >
             <div
               className="w-20 h-20 rounded-2xl flex items-center justify-center relative overflow-hidden"
@@ -137,7 +137,7 @@ export default function ChronosDaySlide({ data, onNext, onPrevious }: SlideProps
                 boxShadow: '0 0 40px rgba(139, 92, 246, 0.3), inset 0 0 20px rgba(139, 92, 246, 0.15)',
               }}
             >
-              <TrendingUp className="w-10 h-10 text-purple-400 relative z-10" />
+              <TrendingUp className="w-8 h-8 text-purple-400 relative z-10 slide-icon" />
               {/* Rotating gradient overlay */}
               <motion.div
                 className="absolute inset-0"
@@ -157,7 +157,7 @@ export default function ChronosDaySlide({ data, onNext, onPrevious }: SlideProps
           </motion.div>
 
           <h2
-            className="text-4xl font-black mb-2"
+            className="text-3xl font-black mb-1.5 slide-title"
             style={{
               background: 'linear-gradient(90deg, #8B5CF6 0%, #EC4899 25%, #EF4444 50%, #10B981 75%, #F97316 100%)',
               WebkitBackgroundClip: 'text',
@@ -168,7 +168,7 @@ export default function ChronosDaySlide({ data, onNext, onPrevious }: SlideProps
           >
             {t('slide.chronosDay.title')}
           </h2>
-          <p className="text-sm text-gray-400 tracking-wide">{t('slide.chronosDay.subtitle')}</p>
+          <p className="text-xs text-gray-400 tracking-wide slide-subtitle">{t('slide.chronosDay.subtitle')}</p>
         </motion.div>
 
         {/* Day bars - radial/circular arrangement */}
@@ -291,7 +291,7 @@ export default function ChronosDaySlide({ data, onNext, onPrevious }: SlideProps
           className="w-full max-w-md"
         >
           <div
-            className="p-6 rounded-2xl relative overflow-hidden"
+            className="p-4 rounded-2xl relative overflow-hidden"
             style={{
               background: `linear-gradient(135deg, ${getDayColor(favoriteDay.dayNumber).glow}90 0%, rgba(0,0,0,0.4) 100%)`,
               border: `2px solid ${getDayColor(favoriteDay.dayNumber).primary}`,
@@ -375,22 +375,6 @@ export default function ChronosDaySlide({ data, onNext, onPrevious }: SlideProps
               </div>
             </div>
           </div>
-        </motion.div>
-
-        {/* Bottom right indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 3, duration: 0.8 }}
-          className="absolute bottom-6 right-6"
-        >
-          <motion.div
-            animate={{ y: [0, -8, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            className="text-gray-600 text-xs tracking-widest uppercase font-semibold"
-          >
-            {t('common.tapToContinue')}
-          </motion.div>
         </motion.div>
       </div>
     </motion.div>

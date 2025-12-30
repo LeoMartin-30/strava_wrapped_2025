@@ -96,13 +96,13 @@ export default function ActivityBreakdownSlide({ data, onNext, onPrevious }: Sli
         }}
       />
 
-      <div className="relative h-full w-full flex flex-col items-center justify-center p-6">
+      <div className="relative h-full w-full flex flex-col items-center justify-between py-8 px-6 safe-top safe-bottom slide-container">
         {/* Header */}
         <motion.div
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.8 }}
-          className="text-center mb-8"
+          className="text-center mb-4 slide-header"
         >
           <motion.div
             animate={{
@@ -113,22 +113,22 @@ export default function ActivityBreakdownSlide({ data, onNext, onPrevious }: Sli
               repeat: Infinity,
               ease: 'easeInOut',
             }}
-            className="inline-block mb-4"
+            className="inline-block mb-3"
           >
             <div
-              className="w-20 h-20 rounded-full flex items-center justify-center"
+              className="w-16 h-16 rounded-full flex items-center justify-center slide-icon-container"
               style={{
                 background: 'radial-gradient(circle, rgba(252, 76, 2, 0.3) 0%, rgba(252, 76, 2, 0.1) 100%)',
                 border: '3px solid rgba(252, 76, 2, 0.5)',
                 boxShadow: '0 0 40px rgba(252, 76, 2, 0.3), inset 0 0 20px rgba(252, 76, 2, 0.2)',
               }}
             >
-              <Activity className="w-10 h-10 text-orange-400" />
+              <Activity className="w-8 h-8 text-orange-400 slide-icon" />
             </div>
           </motion.div>
 
           <h2
-            className="text-4xl font-black mb-2"
+            className="text-3xl font-black mb-1.5 slide-title"
             style={{
               background: 'linear-gradient(to bottom, #ffffff 0%, #e0e0e0 100%)',
               WebkitBackgroundClip: 'text',
@@ -139,7 +139,7 @@ export default function ActivityBreakdownSlide({ data, onNext, onPrevious }: Sli
           >
             {t('slide.breakdown.title')}
           </h2>
-          <p className="text-sm text-gray-400 tracking-wide">{t('slide.breakdown.subtitle')}</p>
+          <p className="text-xs text-gray-400 tracking-wide slide-subtitle">{t('slide.breakdown.subtitle')}</p>
         </motion.div>
 
         {/* Activity Breakdown Bars */}
@@ -147,7 +147,7 @@ export default function ActivityBreakdownSlide({ data, onNext, onPrevious }: Sli
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 0.6, duration: 0.8 }}
-          className="w-full max-w-sm space-y-3 mb-6"
+          className="w-full max-w-sm space-y-2.5 flex-1 flex flex-col justify-center"
         >
           {sortedActivities.map((activity, index) => {
             const percentage = Math.round((activity.count / totalActivities) * 100);
@@ -172,7 +172,7 @@ export default function ActivityBreakdownSlide({ data, onNext, onPrevious }: Sli
                 className="relative"
               >
                 <div
-                  className="p-4 rounded-xl relative overflow-hidden"
+                  className="p-3 rounded-xl relative overflow-hidden"
                   style={{
                     background: `linear-gradient(135deg, ${colorScheme.bg} 0%, ${colorScheme.bg.replace('0.12', '0.03')} 100%)`,
                     border: `2px solid ${colorScheme.border}`,
@@ -191,25 +191,25 @@ export default function ActivityBreakdownSlide({ data, onNext, onPrevious }: Sli
                   />
 
                   <div className="relative flex items-center justify-between">
-                    <div className="flex items-center gap-3 flex-1">
-                      <div className="text-2xl">{emoji}</div>
-                      <div className="flex-1">
-                        <div className="font-bold text-white text-sm">
+                    <div className="flex items-center gap-2.5 flex-1">
+                      <div className="text-xl">{emoji}</div>
+                      <div className="flex-1 min-w-0">
+                        <div className="font-bold text-white text-xs truncate">
                           {activity.type}
                         </div>
-                        <div className="text-xs text-gray-400">
+                        <div className="text-[10px] text-gray-400">
                           {Math.round(activity.totalDistance)} km • {Math.round(activity.totalTime / 3600)}h
                         </div>
                       </div>
                     </div>
-                    <div className="text-right">
+                    <div className="text-right flex-shrink-0">
                       <div
-                        className="text-2xl font-black"
+                        className="text-xl font-black"
                         style={{ color: colorScheme.color }}
                       >
                         {activity.count}
                       </div>
-                      <div className="text-xs text-gray-500">
+                      <div className="text-[10px] text-gray-500">
                         {percentage}%
                       </div>
                     </div>
@@ -225,10 +225,10 @@ export default function ActivityBreakdownSlide({ data, onNext, onPrevious }: Sli
           initial={{ scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
           transition={{ delay: 1.5, duration: 1, type: 'spring', bounce: 0.4 }}
-          className="w-full max-w-sm"
+          className="w-full max-w-sm mt-4"
         >
           <div
-            className="p-5 rounded-2xl relative overflow-hidden"
+            className="p-4 rounded-2xl relative overflow-hidden"
             style={{
               background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%)',
               border: '2px solid rgba(255, 255, 255, 0.1)',
@@ -236,31 +236,16 @@ export default function ActivityBreakdownSlide({ data, onNext, onPrevious }: Sli
             }}
           >
             <div className="relative text-center">
-              <div className="text-xs font-bold tracking-widest text-gray-400 uppercase mb-2">
+              <div className="text-[10px] font-bold tracking-widest text-gray-400 uppercase mb-1.5">
                 {t('slide.breakdown.diversity')}
               </div>
-              <div className="text-4xl font-black text-white">
+              <div className="text-3xl font-black text-white">
                 {Object.keys(data.activitiesByType).length} {t('slide.breakdown.activityTypes')}
               </div>
             </div>
           </div>
         </motion.div>
 
-        {/* Bottom indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 0.8 }}
-          className="absolute bottom-6 right-6"
-        >
-          <motion.div
-            animate={{ y: [0, -8, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            className="text-gray-600 text-xs tracking-widest uppercase font-semibold"
-          >
-            {t('slide.breakdown.tapToContinue')}
-          </motion.div>
-        </motion.div>
       </div>
     </motion.div>
   );

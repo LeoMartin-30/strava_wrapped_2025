@@ -76,13 +76,13 @@ export default function EmojiSlide({ data, onNext, onPrevious }: SlideProps) {
         }}
       />
 
-      <div className="relative h-full w-full flex flex-col items-center justify-center p-6">
+      <div className="relative h-full w-full flex flex-col items-center justify-between slide-container py-8 px-6 safe-top safe-bottom">
         {/* Header */}
         <motion.div
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.8 }}
-          className="text-center mb-8"
+          className="text-center mb-4 slide-header"
         >
           <motion.div
             animate={{
@@ -93,22 +93,22 @@ export default function EmojiSlide({ data, onNext, onPrevious }: SlideProps) {
               repeat: Infinity,
               ease: 'easeInOut',
             }}
-            className="inline-block mb-4"
+            className="inline-block mb-3"
           >
             <div
-              className="w-20 h-20 rounded-full flex items-center justify-center"
+              className="w-16 h-16 rounded-full flex items-center justify-center slide-icon-container"
               style={{
                 background: 'radial-gradient(circle, rgba(251, 191, 36, 0.3) 0%, rgba(251, 191, 36, 0.1) 100%)',
                 border: '3px solid rgba(251, 191, 36, 0.5)',
                 boxShadow: '0 0 40px rgba(251, 191, 36, 0.3), inset 0 0 20px rgba(251, 191, 36, 0.2)',
               }}
             >
-              <Smile className="w-10 h-10 text-yellow-400" />
+              <Smile className="w-8 h-8 text-yellow-400 slide-icon" />
             </div>
           </motion.div>
 
           <h2
-            className="text-4xl font-black mb-2"
+            className="text-3xl font-black mb-1.5 slide-title"
             style={{
               background: 'linear-gradient(to bottom, #ffffff 0%, #e0e0e0 100%)',
               WebkitBackgroundClip: 'text',
@@ -119,7 +119,7 @@ export default function EmojiSlide({ data, onNext, onPrevious }: SlideProps) {
           >
             {t('slide.emoji.title')}
           </h2>
-          <p className="text-sm text-gray-400 tracking-wide">{t('slide.emoji.subtitle')}</p>
+          <p className="text-xs text-gray-400 tracking-wide slide-subtitle">{t('slide.emoji.subtitle')}</p>
         </motion.div>
 
         {/* Top 3 Emojis - Big Display */}
@@ -325,22 +325,6 @@ export default function EmojiSlide({ data, onNext, onPrevious }: SlideProps) {
           <p className="text-sm text-gray-500 italic">
             {t('slide.emoji.emotionsInMotion')}
           </p>
-        </motion.div>
-
-        {/* Bottom indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2.5, duration: 0.8 }}
-          className="absolute bottom-6 right-6"
-        >
-          <motion.div
-            animate={{ y: [0, -8, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            className="text-gray-600 text-xs tracking-widest uppercase font-semibold"
-          >
-            {t('slide.emoji.tapToContinue')}
-          </motion.div>
         </motion.div>
       </div>
     </motion.div>

@@ -79,13 +79,13 @@ export default function IntensitySlide({ data, onNext, onPrevious }: SlideProps)
         </motion.div>
       ))}
 
-      <div className="relative h-full w-full flex flex-col items-center justify-center p-6">
+      <div className="relative h-full w-full flex flex-col items-center justify-between slide-container py-8 px-6 safe-top safe-bottom">
         {/* Header */}
         <motion.div
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.8 }}
-          className="text-center mb-8"
+          className="text-center mb-4 slide-header"
         >
           <motion.div
             animate={{
@@ -96,22 +96,22 @@ export default function IntensitySlide({ data, onNext, onPrevious }: SlideProps)
               repeat: Infinity,
               ease: 'easeInOut',
             }}
-            className="inline-block mb-4"
+            className="inline-block mb-3"
           >
             <div
-              className="w-20 h-20 rounded-full flex items-center justify-center"
+              className="w-16 h-16 rounded-full flex items-center justify-center slide-icon-container"
               style={{
                 background: 'radial-gradient(circle, rgba(239, 68, 68, 0.3) 0%, rgba(239, 68, 68, 0.1) 100%)',
                 border: '3px solid rgba(239, 68, 68, 0.5)',
                 boxShadow: '0 0 40px rgba(239, 68, 68, 0.3), inset 0 0 20px rgba(239, 68, 68, 0.2)',
               }}
             >
-              <Heart className="w-10 h-10 text-red-400 fill-red-400" />
+              <Heart className="w-8 h-8 text-red-400 fill-red-400 slide-icon" />
             </div>
           </motion.div>
 
           <h2
-            className="text-4xl font-black mb-2"
+            className="text-3xl font-black mb-1.5 slide-title"
             style={{
               background: 'linear-gradient(to bottom, #ffffff 0%, #e0e0e0 100%)',
               WebkitBackgroundClip: 'text',
@@ -122,7 +122,7 @@ export default function IntensitySlide({ data, onNext, onPrevious }: SlideProps)
           >
             {t('slide.intensity.title')}
           </h2>
-          <p className="text-sm text-gray-400 tracking-wide">{t('slide.intensity.subtitle')}</p>
+          <p className="text-xs text-gray-400 tracking-wide slide-subtitle">{t('slide.intensity.subtitle')}</p>
         </motion.div>
 
         {/* Heart Rate Zones Display */}
@@ -141,7 +141,7 @@ export default function IntensitySlide({ data, onNext, onPrevious }: SlideProps)
                 transition={{ delay: 0.8 + i * 0.1, duration: 0.6 }}
               >
                 <div
-                  className="p-4 rounded-xl relative overflow-hidden"
+                  className="p-4 rounded-xl relative overflow-hidden flex-1 flex flex-col justify-center"
                   style={{
                     background: `linear-gradient(135deg, ${zone.color}20 0%, ${zone.color}08 100%)`,
                     border: `2px solid ${zone.color}40`,
@@ -165,7 +165,7 @@ export default function IntensitySlide({ data, onNext, onPrevious }: SlideProps)
 
                     <div className="text-right">
                       <div
-                        className="text-3xl font-black"
+                        className="text-2xl font-black"
                         style={{
                           color: zone.color,
                           textShadow: `0 2px 15px ${zone.color}60`,
@@ -203,7 +203,7 @@ export default function IntensitySlide({ data, onNext, onPrevious }: SlideProps)
           className="w-full max-w-sm"
         >
           <div
-            className="p-6 rounded-2xl relative overflow-hidden"
+            className="p-4 rounded-2xl relative overflow-hidden"
             style={{
               background: `linear-gradient(135deg, ${dominantZone.color}18 0%, ${dominantZone.color}05 100%)`,
               border: `2px solid ${dominantZone.color}50`,
@@ -232,7 +232,7 @@ export default function IntensitySlide({ data, onNext, onPrevious }: SlideProps)
                 <div className="text-xs text-gray-400 uppercase tracking-wider">{t('slide.intensity.dominantZone')}</div>
               </div>
               <div
-                className="text-3xl font-black mb-1"
+                className="text-2xl font-black mb-1"
                 style={{
                   color: dominantZone.color,
                   textShadow: `0 2px 20px ${dominantZone.color}60`,
@@ -240,28 +240,13 @@ export default function IntensitySlide({ data, onNext, onPrevious }: SlideProps)
               >
                 {dominantZone.zone}
               </div>
-              <div className="text-sm text-gray-400">
+              <div className="text-xs text-gray-400">
                 {t('slide.intensity.spentInZone').replace('{percentage}', dominantZone.percentage.toString())}
               </div>
             </div>
           </div>
         </motion.div>
 
-        {/* Bottom indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 0.8 }}
-          className="absolute bottom-6 right-6"
-        >
-          <motion.div
-            animate={{ y: [0, -8, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            className="text-gray-600 text-xs tracking-widest uppercase font-semibold"
-          >
-            {t('slide.intensity.tapToContinue')}
-          </motion.div>
-        </motion.div>
       </div>
     </motion.div>
   );

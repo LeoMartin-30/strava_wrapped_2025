@@ -72,13 +72,13 @@ export default function MoteurSlide({ data, onNext, onPrevious }: SlideProps) {
         </motion.div>
       ))}
 
-      <div className="relative h-full w-full flex flex-col items-center justify-center p-6">
+      <div className="relative h-full w-full flex flex-col items-center justify-between slide-container py-8 px-6 safe-top safe-bottom">
         {/* Header */}
         <motion.div
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.8 }}
-          className="text-center mb-8"
+          className="text-center mb-4 slide-header"
         >
           <motion.div
             animate={{
@@ -90,22 +90,22 @@ export default function MoteurSlide({ data, onNext, onPrevious }: SlideProps) {
               repeat: Infinity,
               ease: 'easeInOut',
             }}
-            className="inline-block mb-4"
+            className="inline-block mb-3"
           >
             <div
-              className="w-20 h-20 rounded-full flex items-center justify-center"
+              className="w-16 h-16 rounded-full flex items-center justify-center slide-icon-container"
               style={{
                 background: 'radial-gradient(circle, rgba(234, 179, 8, 0.3) 0%, rgba(234, 179, 8, 0.1) 100%)',
                 border: '3px solid rgba(234, 179, 8, 0.5)',
                 boxShadow: '0 0 40px rgba(234, 179, 8, 0.3), inset 0 0 20px rgba(234, 179, 8, 0.2)',
               }}
             >
-              <Zap className="w-10 h-10 text-yellow-400 fill-yellow-400" />
+              <Zap className="w-8 h-8 text-yellow-400 fill-yellow-400 slide-icon" />
             </div>
           </motion.div>
 
           <h2
-            className="text-4xl font-black mb-2"
+            className="text-3xl font-black mb-1.5 slide-title"
             style={{
               background: 'linear-gradient(to bottom, #ffffff 0%, #e0e0e0 100%)',
               WebkitBackgroundClip: 'text',
@@ -116,7 +116,7 @@ export default function MoteurSlide({ data, onNext, onPrevious }: SlideProps) {
           >
             {t('slide.moteur.title')}
           </h2>
-          <p className="text-sm text-gray-400 tracking-wide">{t('slide.moteur.subtitle')}</p>
+          <p className="text-xs text-gray-400 tracking-wide slide-subtitle">{t('slide.moteur.subtitle')}</p>
         </motion.div>
 
         <div className="w-full max-w-sm space-y-4">
@@ -128,7 +128,7 @@ export default function MoteurSlide({ data, onNext, onPrevious }: SlideProps) {
               transition={{ delay: 0.6, duration: 0.8, type: 'spring' }}
             >
               <div
-                className="p-6 rounded-2xl relative overflow-hidden"
+                className="p-4 rounded-2xl relative overflow-hidden"
                 style={{
                   background: 'linear-gradient(135deg, rgba(234, 179, 8, 0.15) 0%, rgba(234, 179, 8, 0.05) 100%)',
                   border: '2px solid rgba(234, 179, 8, 0.3)',
@@ -212,7 +212,7 @@ export default function MoteurSlide({ data, onNext, onPrevious }: SlideProps) {
               transition={{ delay: 0.8, duration: 0.8, type: 'spring' }}
             >
               <div
-                className="p-6 rounded-2xl relative overflow-hidden"
+                className="p-4 rounded-2xl relative overflow-hidden"
                 style={{
                   background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.05) 100%)',
                   border: '2px solid rgba(239, 68, 68, 0.3)',
@@ -314,22 +314,6 @@ export default function MoteurSlide({ data, onNext, onPrevious }: SlideProps) {
             <Zap className="w-4 h-4 text-yellow-400" />
             {t('slide.moteur.calibratedForPerformance')}
           </p>
-        </motion.div>
-
-        {/* Bottom indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 0.8 }}
-          className="absolute bottom-6 right-6"
-        >
-          <motion.div
-            animate={{ y: [0, -8, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            className="text-gray-600 text-xs tracking-widest uppercase font-semibold"
-          >
-            {t('slide.moteur.tapToContinue')}
-          </motion.div>
         </motion.div>
       </div>
     </motion.div>

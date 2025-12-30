@@ -173,7 +173,7 @@ export default function DominanceRevealSlide({
       />
 
       {/* Main content container */}
-      <div className="relative h-full w-full flex flex-col items-center justify-center p-8">
+      <div className="relative h-full w-full flex flex-col items-center justify-between slide-container py-8 px-6 safe-top safe-bottom">
         {/* Badge reveal */}
         <motion.div
           initial={{ scale: 0, rotateY: -180 }}
@@ -210,7 +210,7 @@ export default function DominanceRevealSlide({
 
           {/* Badge container */}
           <div
-            className="relative w-40 h-40 rounded-full flex items-center justify-center"
+            className="relative w-32 h-32 rounded-full flex items-center justify-center"
             style={{
               background: `radial-gradient(circle, ${theme.colors.primary}30 0%, ${theme.colors.background} 100%)`,
               border: `3px solid ${theme.colors.primary}`,
@@ -223,7 +223,7 @@ export default function DominanceRevealSlide({
           >
             {/* Emoji */}
             <motion.div
-              className="text-7xl"
+              className="text-6xl"
               initial={{ scale: 0, rotate: -90 }}
               animate={{ scale: 1, rotate: 0 }}
               transition={{
@@ -263,10 +263,10 @@ export default function DominanceRevealSlide({
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 2.0 }}
-          className="text-center mb-4"
+          className="text-center mb-4 slide-header"
         >
           <motion.h1
-            className="text-6xl font-black mb-2 tracking-tight"
+            className="text-5xl font-black mb-1.5 tracking-tight"
             style={{
               fontFamily: 'system-ui, -apple-system, sans-serif',
               fontWeight: 900,
@@ -283,7 +283,7 @@ export default function DominanceRevealSlide({
           </motion.h1>
 
           <motion.div
-            className="text-sm font-bold tracking-widest uppercase"
+            className="text-xs font-bold tracking-widest uppercase"
             style={{
               color: theme.colors.secondary,
               opacity: 0.8,
@@ -354,7 +354,7 @@ export default function DominanceRevealSlide({
             delay: 3,
             repeat: Infinity,
           }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-xs uppercase tracking-widest font-bold"
+          className="text-center mt-4 text-[10px] uppercase tracking-widest font-bold"
           style={{ color: theme.colors.accent, opacity: 0.4 }}
         >
           Préparation de ton récap...

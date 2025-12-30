@@ -69,13 +69,13 @@ export default function PowerSlide({ data, onNext, onPrevious }: SlideProps) {
         </motion.div>
       ))}
 
-      <div className="relative h-full w-full flex flex-col items-center justify-center p-6">
+      <div className="relative h-full w-full flex flex-col items-center justify-between slide-container py-8 px-6 safe-top safe-bottom">
         {/* Header */}
         <motion.div
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.8 }}
-          className="text-center mb-8"
+          className="text-center mb-4 slide-header"
         >
           <motion.div
             animate={{
@@ -87,22 +87,22 @@ export default function PowerSlide({ data, onNext, onPrevious }: SlideProps) {
               repeat: Infinity,
               ease: 'easeInOut',
             }}
-            className="inline-block mb-4"
+            className="inline-block mb-3"
           >
             <div
-              className="w-20 h-20 rounded-full flex items-center justify-center"
+              className="w-16 h-16 rounded-full flex items-center justify-center slide-icon-container"
               style={{
                 background: 'radial-gradient(circle, rgba(234, 179, 8, 0.3) 0%, rgba(234, 179, 8, 0.1) 100%)',
                 border: '3px solid rgba(234, 179, 8, 0.5)',
                 boxShadow: '0 0 40px rgba(234, 179, 8, 0.3), inset 0 0 20px rgba(234, 179, 8, 0.2)',
               }}
             >
-              <Zap className="w-10 h-10 text-yellow-400 fill-yellow-400" />
+              <Zap className="w-8 h-8 text-yellow-400 fill-yellow-400 slide-icon" />
             </div>
           </motion.div>
 
           <h2
-            className="text-4xl font-black mb-2"
+            className="text-3xl font-black mb-1.5 slide-title"
             style={{
               background: 'linear-gradient(to bottom, #ffffff 0%, #e0e0e0 100%)',
               WebkitBackgroundClip: 'text',
@@ -113,7 +113,7 @@ export default function PowerSlide({ data, onNext, onPrevious }: SlideProps) {
           >
             {t('slide.power.title')}
           </h2>
-          <p className="text-sm text-gray-400 tracking-wide">{t('slide.power.subtitle')}</p>
+          <p className="text-xs text-gray-400 tracking-wide slide-subtitle">{t('slide.power.subtitle')}</p>
         </motion.div>
 
         <div className="w-full max-w-sm space-y-4">
@@ -124,7 +124,7 @@ export default function PowerSlide({ data, onNext, onPrevious }: SlideProps) {
             transition={{ delay: 0.6, duration: 0.8, type: 'spring' }}
           >
             <div
-              className="p-6 rounded-2xl relative overflow-hidden"
+              className="p-4 rounded-2xl relative overflow-hidden"
               style={{
                 background: 'linear-gradient(135deg, rgba(234, 179, 8, 0.15) 0%, rgba(234, 179, 8, 0.05) 100%)',
                 border: '2px solid rgba(234, 179, 8, 0.3)',
@@ -153,7 +153,7 @@ export default function PowerSlide({ data, onNext, onPrevious }: SlideProps) {
                   <div className="text-xs text-yellow-400 uppercase tracking-wider font-bold">{t('slide.power.peakPower')}</div>
                 </div>
                 <div
-                  className="text-6xl font-black mb-2"
+                  className="text-5xl font-black mb-2"
                   style={{
                     color: '#EAB308',
                     textShadow: '0 2px 30px rgba(234, 179, 8, 0.6)',
@@ -161,7 +161,7 @@ export default function PowerSlide({ data, onNext, onPrevious }: SlideProps) {
                 >
                   <AnimatedCounter to={powerStats.peakPower} duration={2} delay={0.8} />
                 </div>
-                <div className="text-lg text-gray-300 font-semibold mb-1">
+                <div className="text-base text-gray-300 font-semibold mb-1">
                   {t('slide.power.watts')}
                 </div>
                 <div className="text-xs text-gray-500">
@@ -178,7 +178,7 @@ export default function PowerSlide({ data, onNext, onPrevious }: SlideProps) {
             transition={{ delay: 0.8, duration: 0.8, type: 'spring' }}
           >
             <div
-              className="p-6 rounded-2xl relative overflow-hidden"
+              className="p-4 rounded-2xl relative overflow-hidden"
               style={{
                 background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.12) 0%, rgba(59, 130, 246, 0.03) 100%)',
                 border: '2px solid rgba(59, 130, 246, 0.25)',
@@ -206,7 +206,7 @@ export default function PowerSlide({ data, onNext, onPrevious }: SlideProps) {
                   {t('slide.power.averagePower')}
                 </div>
                 <div
-                  className="text-5xl font-black mb-2"
+                  className="text-4xl font-black mb-2"
                   style={{
                     color: '#3B82F6',
                     textShadow: '0 2px 25px rgba(59, 130, 246, 0.5)',
@@ -214,7 +214,7 @@ export default function PowerSlide({ data, onNext, onPrevious }: SlideProps) {
                 >
                   <AnimatedCounter to={powerStats.averagePower} duration={2} delay={1} />
                 </div>
-                <div className="text-lg text-gray-300 font-semibold mb-1">
+                <div className="text-base text-gray-300 font-semibold mb-1">
                   {t('slide.power.watts')}
                 </div>
                 <div className="text-xs text-gray-500">
@@ -241,7 +241,7 @@ export default function PowerSlide({ data, onNext, onPrevious }: SlideProps) {
                 <div className="text-xs text-gray-400 mb-1">{t('slide.power.powerData')}</div>
                 <div className="flex items-center justify-center gap-2">
                   <div
-                    className="text-3xl font-black"
+                    className="text-2xl font-black"
                     style={{
                       background: 'linear-gradient(90deg, #EAB308 0%, #3B82F6 100%)',
                       WebkitBackgroundClip: 'text',
@@ -276,21 +276,6 @@ export default function PowerSlide({ data, onNext, onPrevious }: SlideProps) {
           </p>
         </motion.div>
 
-        {/* Bottom indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 0.8 }}
-          className="absolute bottom-6 right-6"
-        >
-          <motion.div
-            animate={{ y: [0, -8, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            className="text-gray-600 text-xs tracking-widest uppercase font-semibold"
-          >
-            {t('slide.power.tapToContinue')}
-          </motion.div>
-        </motion.div>
       </div>
     </motion.div>
   );

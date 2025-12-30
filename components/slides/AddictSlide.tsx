@@ -82,13 +82,13 @@ export default function AddictSlide({ data, onNext, onPrevious }: SlideProps) {
         </motion.div>
       ))}
 
-      <div className="relative h-full w-full flex flex-col items-center justify-center p-6">
+      <div className="relative h-full w-full flex flex-col items-center justify-between py-8 px-6 safe-top safe-bottom slide-container">
         {/* Header */}
         <motion.div
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.8 }}
-          className="text-center mb-8"
+          className="text-center mb-4 slide-header"
         >
           <motion.div
             animate={{
@@ -99,22 +99,22 @@ export default function AddictSlide({ data, onNext, onPrevious }: SlideProps) {
               repeat: Infinity,
               ease: 'easeInOut',
             }}
-            className="inline-block mb-4"
+            className="inline-block mb-3"
           >
             <div
-              className="w-20 h-20 rounded-full flex items-center justify-center"
+              className="w-16 h-16 rounded-full flex items-center justify-center slide-icon-container"
               style={{
                 background: 'radial-gradient(circle, rgba(14, 165, 233, 0.3) 0%, rgba(14, 165, 233, 0.1) 100%)',
                 border: '3px solid rgba(14, 165, 233, 0.5)',
                 boxShadow: '0 0 40px rgba(14, 165, 233, 0.3), inset 0 0 20px rgba(14, 165, 233, 0.2)',
               }}
             >
-              <Clock className="w-10 h-10 text-sky-400" />
+              <Clock className="w-8 h-8 text-sky-400 slide-icon" />
             </div>
           </motion.div>
 
           <h2
-            className="text-4xl font-black mb-2"
+            className="text-3xl font-black mb-1.5 slide-title"
             style={{
               background: 'linear-gradient(to bottom, #ffffff 0%, #e0e0e0 100%)',
               WebkitBackgroundClip: 'text',
@@ -125,7 +125,7 @@ export default function AddictSlide({ data, onNext, onPrevious }: SlideProps) {
           >
             {t('slide.addict.title')}
           </h2>
-          <p className="text-sm text-gray-400 tracking-wide">{t('slide.addict.subtitle')}</p>
+          <p className="text-xs text-gray-400 tracking-wide slide-subtitle">{t('slide.addict.subtitle')}</p>
         </motion.div>
 
         <div className="w-full max-w-sm space-y-4">
@@ -136,7 +136,7 @@ export default function AddictSlide({ data, onNext, onPrevious }: SlideProps) {
             transition={{ delay: 0.6, duration: 0.8, type: 'spring' }}
           >
             <div
-              className="p-6 rounded-2xl relative overflow-hidden"
+              className="p-4 rounded-2xl relative overflow-hidden"
               style={{
                 background: 'linear-gradient(135deg, rgba(14, 165, 233, 0.15) 0%, rgba(14, 165, 233, 0.05) 100%)',
                 border: '2px solid rgba(14, 165, 233, 0.3)',
@@ -161,7 +161,7 @@ export default function AddictSlide({ data, onNext, onPrevious }: SlideProps) {
 
               <div className="relative text-center">
                 <div
-                  className="text-6xl font-black mb-2"
+                  className="text-5xl font-black mb-2"
                   style={{
                     color: '#0EA5E9',
                     textShadow: '0 2px 30px rgba(14, 165, 233, 0.6)',
@@ -187,7 +187,7 @@ export default function AddictSlide({ data, onNext, onPrevious }: SlideProps) {
               transition={{ delay: 0.8, duration: 0.8, type: 'spring' }}
             >
               <div
-                className="p-6 rounded-2xl relative overflow-hidden"
+                className="p-4 rounded-2xl relative overflow-hidden"
                 style={{
                   background: 'linear-gradient(135deg, rgba(252, 76, 2, 0.12) 0%, rgba(252, 76, 2, 0.03) 100%)',
                   border: '2px solid rgba(252, 76, 2, 0.25)',
@@ -247,7 +247,7 @@ export default function AddictSlide({ data, onNext, onPrevious }: SlideProps) {
               transition={{ delay: 1, duration: 0.8, type: 'spring' }}
             >
               <div
-                className="p-6 rounded-2xl relative overflow-hidden"
+                className="p-4 rounded-2xl relative overflow-hidden"
                 style={{
                   background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.12) 0%, rgba(34, 197, 94, 0.03) 100%)',
                   border: '2px solid rgba(34, 197, 94, 0.25)',
@@ -315,22 +315,6 @@ export default function AddictSlide({ data, onNext, onPrevious }: SlideProps) {
               ? t('slide.addict.veryRegular')
               : t('slide.addict.moderatelyConnected')}
           </p>
-        </motion.div>
-
-        {/* Bottom indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 0.8 }}
-          className="absolute bottom-6 right-6"
-        >
-          <motion.div
-            animate={{ y: [0, -8, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            className="text-gray-600 text-xs tracking-widest uppercase font-semibold"
-          >
-            {t('slide.addict.tapToContinue')}
-          </motion.div>
         </motion.div>
       </div>
     </motion.div>

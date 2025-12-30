@@ -83,7 +83,7 @@ export default function SocialButterflySlide({ data, onNext, onPrevious }: Slide
         }}
       />
 
-      <div className="relative h-full w-full flex flex-col items-center justify-center p-6">
+      <div className="relative h-full w-full flex flex-col items-center justify-between slide-container py-8 px-6 safe-top safe-bottom">
         {/* Header */}
         <motion.div
           initial={{ y: -50, opacity: 0 }}
@@ -152,7 +152,7 @@ export default function SocialButterflySlide({ data, onNext, onPrevious }: Slide
           </motion.div>
 
           <h2
-            className="text-4xl font-black mb-2"
+            className="text-3xl font-black mb-1.5 slide-title"
             style={{
               background: 'linear-gradient(to right, #6366F1 0%, #EC4899 50%, #8B5CF6 100%)',
               WebkitBackgroundClip: 'text',
@@ -163,7 +163,7 @@ export default function SocialButterflySlide({ data, onNext, onPrevious }: Slide
           >
             {t('slide.social.title')}
           </h2>
-          <p className="text-sm text-gray-400 tracking-wide">{t('slide.social.subtitle')}</p>
+          <p className="text-xs text-gray-400 tracking-wide slide-subtitle">{t('slide.social.subtitle')}</p>
         </motion.div>
 
         {/* Stats Grid */}
@@ -214,7 +214,7 @@ export default function SocialButterflySlide({ data, onNext, onPrevious }: Slide
                   }}
                   className="inline-block mb-3"
                 >
-                  <Users className="w-8 h-8 text-indigo-400" />
+                  <Users className="w-8 h-8 text-indigo-400 slide-icon" />
                 </motion.div>
 
                 <div className="text-xs font-bold text-indigo-300 uppercase tracking-wider mb-2">
@@ -279,7 +279,7 @@ export default function SocialButterflySlide({ data, onNext, onPrevious }: Slide
                   }}
                   className="inline-block mb-3"
                 >
-                  <Trophy className="w-8 h-8 text-pink-400" />
+                  <Trophy className="w-8 h-8 text-pink-400 slide-icon" />
                 </motion.div>
 
                 <div className="text-xs font-bold text-pink-300 uppercase tracking-wider mb-2">
@@ -345,7 +345,7 @@ export default function SocialButterflySlide({ data, onNext, onPrevious }: Slide
                   }}
                   className="inline-block mb-3"
                 >
-                  <MessageCircle className="w-8 h-8 text-purple-400" />
+                  <MessageCircle className="w-8 h-8 text-purple-400 slide-icon" />
                 </motion.div>
 
                 <div className="text-xs font-bold text-purple-300 uppercase tracking-wider mb-2">
@@ -381,7 +381,7 @@ export default function SocialButterflySlide({ data, onNext, onPrevious }: Slide
           className="w-full max-w-xl"
         >
           <div
-            className="p-6 rounded-2xl relative overflow-hidden text-center"
+            className="p-4 rounded-2xl relative overflow-hidden text-center"
             style={{
               background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(236, 72, 153, 0.2) 100%)',
               border: '2px solid rgba(99, 102, 241, 0.4)',
@@ -419,22 +419,6 @@ export default function SocialButterflySlide({ data, onNext, onPrevious }: Slide
               </div>
             </div>
           </div>
-        </motion.div>
-
-        {/* Bottom indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2.5, duration: 0.8 }}
-          className="absolute bottom-6 right-6"
-        >
-          <motion.div
-            animate={{ y: [0, -8, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            className="text-gray-600 text-xs tracking-widest uppercase font-semibold"
-          >
-            {t('common.tapToContinue')}
-          </motion.div>
         </motion.div>
       </div>
     </motion.div>

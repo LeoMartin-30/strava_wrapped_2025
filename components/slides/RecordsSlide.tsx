@@ -448,15 +448,6 @@ export default function RecordsSlide({ data, onNext, onPrevious }: SlideProps) {
             </div>
           </motion.div>
         </div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2.2, duration: 1 }}
-          className="mt-6 text-amber-200/40 text-xs tracking-widest uppercase font-semibold"
-        >
-          ★ {t('slide.records.tapToContinue')} ★
-        </motion.div>
       </div>
     </motion.div>
   );

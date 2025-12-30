@@ -36,4 +36,81 @@ body {
   .shadow-glow-orange {
     box-shadow: 0 0 30px rgba(252, 76, 2, 0.3);
   }
+
+  /* Safe area utilities for mobile devices with notches */
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .safe-left {
+    padding-left: env(safe-area-inset-left);
+  }
+
+  .safe-right {
+    padding-right: env(safe-area-inset-right);
+  }
+
+  /* Ensure minimum padding even when safe areas are 0 */
+  @supports (padding: max(0px)) {
+    .safe-top {
+      padding-top: max(env(safe-area-inset-top), 0px);
+    }
+
+    .safe-bottom {
+      padding-bottom: max(env(safe-area-inset-bottom), 0px);
+    }
+  }
+
+  /* Responsive slide container - adapts based on screen size */
+  @media (min-width: 768px) {
+    /* Desktop: restore original spacious layout */
+    .slide-container {
+      justify-content: center !important;
+      padding: 1.5rem !important;
+    }
+
+    /* Desktop: restore original spacing */
+    .slide-header {
+      margin-bottom: 2rem !important;
+    }
+
+    /* Desktop: restore original icon sizes */
+    .slide-icon-container {
+      width: 5rem !important;
+      height: 5rem !important;
+      margin-bottom: 1rem !important;
+    }
+
+    .slide-icon {
+      width: 2.5rem !important;
+      height: 2.5rem !important;
+    }
+
+    /* Desktop: restore original text sizes */
+    .slide-title {
+      font-size: 2.25rem !important; /* text-4xl */
+      margin-bottom: 0.5rem !important;
+    }
+
+    .slide-subtitle {
+      font-size: 0.875rem !important; /* text-sm */
+    }
+
+    /* Desktop: restore original card padding */
+    .slide-card {
+      padding: 2rem !important; /* p-8 */
+    }
+
+    .slide-card-md {
+      padding: 1.5rem !important; /* p-6 */
+    }
+
+    .slide-card-sm {
+      padding: 1.25rem !important; /* p-5 */
+    }
+  }
 }
