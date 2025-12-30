@@ -4,9 +4,11 @@ import { motion } from 'framer-motion';
 import { SlideProps } from '@/types';
 import { Thermometer, Snowflake, Flame } from 'lucide-react';
 import AnimatedCounter from '../AnimatedCounter';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function WeatherSlide({ data, onNext, onPrevious }: SlideProps) {
   const { temperatureRecords } = data;
+  const { t } = useLanguage();
 
   if (temperatureRecords.averageTemperature === 0) {
     return null;
@@ -127,9 +129,9 @@ export default function WeatherSlide({ data, onNext, onPrevious }: SlideProps) {
               letterSpacing: '0.05em',
             }}
           >
-            Guerrier Météo
+            {t('slide.weather.title')}
           </h2>
-          <p className="text-sm text-gray-400 tracking-wide">Toutes conditions, toute l'année</p>
+          <p className="text-sm text-gray-400 tracking-wide">{t('slide.weather.subtitle')}</p>
         </motion.div>
 
         <div className="space-y-4 w-full max-w-sm mb-6">
@@ -189,7 +191,7 @@ export default function WeatherSlide({ data, onNext, onPrevious }: SlideProps) {
 
                 <div className="flex-1">
                   <div className="text-xs font-bold tracking-widest text-blue-400 uppercase mb-1">
-                    Jour le plus froid
+                    {t('slide.weather.coldestDay') || 'Jour le plus froid'}
                   </div>
                   <div
                     className="text-5xl font-black mb-1"
@@ -273,7 +275,7 @@ export default function WeatherSlide({ data, onNext, onPrevious }: SlideProps) {
 
                 <div className="flex-1">
                   <div className="text-xs font-bold tracking-widest text-red-400 uppercase mb-1">
-                    Jour le plus chaud
+                    {t('slide.weather.hottestDay') || 'Jour le plus chaud'}
                   </div>
                   <div
                     className="text-5xl font-black mb-1"
@@ -334,7 +336,7 @@ export default function WeatherSlide({ data, onNext, onPrevious }: SlideProps) {
 
             <div className="relative text-center">
               <div className="text-xs font-bold tracking-widest text-orange-400 uppercase mb-2">
-                Température Moyenne
+                {t('slide.weather.averageTemperature') || 'Température Moyenne'}
               </div>
               <div
                 className="text-6xl font-black mb-2"
@@ -351,7 +353,7 @@ export default function WeatherSlide({ data, onNext, onPrevious }: SlideProps) {
                 />
               </div>
               <div className="text-sm text-gray-300 font-semibold">
-                Amplitude thermique: {tempRange}°C
+                {t('slide.weather.thermalRange') || 'Amplitude thermique'}: {tempRange}°C
               </div>
             </div>
           </div>
@@ -366,10 +368,10 @@ export default function WeatherSlide({ data, onNext, onPrevious }: SlideProps) {
         >
           <p className="text-sm text-gray-500 italic">
             {tempRange > 40
-              ? "Rien ne vous arrête 💪"
+              ? t('slide.weather.nothingStopsYou') || "Rien ne vous arrête 💪"
               : tempRange > 25
-              ? "Adaptation niveau expert 🌡️"
-              : "Toujours prêt pour l'aventure ⛅"}
+              ? t('slide.weather.expertAdaptation') || "Adaptation niveau expert 🌡️"
+              : t('slide.weather.alwaysReadyForAdventure') || "Toujours prêt pour l'aventure ⛅"}
           </p>
         </motion.div>
 
@@ -385,7 +387,7 @@ export default function WeatherSlide({ data, onNext, onPrevious }: SlideProps) {
             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
             className="text-gray-600 text-xs tracking-widest uppercase font-semibold"
           >
-            Tap pour continuer
+            {t('common.tapToContinue')}
           </motion.div>
         </motion.div>
       </div>

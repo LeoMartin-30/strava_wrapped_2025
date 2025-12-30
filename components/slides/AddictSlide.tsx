@@ -4,9 +4,11 @@ import { motion } from 'framer-motion';
 import { SlideProps } from '@/types';
 import { Clock, Calendar, LogIn } from 'lucide-react';
 import AnimatedCounter from '../AnimatedCounter';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function AddictSlide({ data, onNext, onPrevious }: SlideProps) {
   const { logins } = data;
+  const { t } = useLanguage();
 
   // Skip if no login data
   if (!logins || logins.totalLogins === 0) {
@@ -20,10 +22,10 @@ export default function AddictSlide({ data, onNext, onPrevious }: SlideProps) {
 
   // Get time period description
   const getTimePeriod = (hour: number) => {
-    if (hour >= 5 && hour < 12) return "Lève-tôt";
-    if (hour >= 12 && hour < 17) return "Après-midi";
-    if (hour >= 17 && hour < 22) return "Soirée";
-    return "Noctambule";
+    if (hour >= 5 && hour < 12) return t('slide.addict.earlyBird');
+    if (hour >= 12 && hour < 17) return t('slide.addict.afternoon');
+    if (hour >= 17 && hour < 22) return t('slide.addict.evening');
+    return t('slide.addict.nightOwl');
   };
 
   return (
@@ -121,9 +123,9 @@ export default function AddictSlide({ data, onNext, onPrevious }: SlideProps) {
               letterSpacing: '0.05em',
             }}
           >
-            L'Accro
+            {t('slide.addict.title')}
           </h2>
-          <p className="text-sm text-gray-400 tracking-wide">Tes habitudes Strava en 2025</p>
+          <p className="text-sm text-gray-400 tracking-wide">{t('slide.addict.subtitle')}</p>
         </motion.div>
 
         <div className="w-full max-w-sm space-y-4">
@@ -168,10 +170,10 @@ export default function AddictSlide({ data, onNext, onPrevious }: SlideProps) {
                   <AnimatedCounter to={logins.totalLogins} duration={2} delay={0.8} />
                 </div>
                 <div className="text-lg text-gray-300 font-semibold mb-1">
-                  connexions
+                  {t('slide.addict.logins')}
                 </div>
                 <div className="text-xs text-gray-500">
-                  en 2025
+                  {t('slide.addict.in2025')}
                 </div>
               </div>
             </div>
@@ -217,7 +219,7 @@ export default function AddictSlide({ data, onNext, onPrevious }: SlideProps) {
 
                   <div className="flex-1">
                     <div className="text-xs font-bold tracking-widest text-orange-400 uppercase mb-1">
-                      Heure de Pic
+                      {t('slide.addict.peakHour')}
                     </div>
                     <div
                       className="text-4xl font-black tracking-tight"
@@ -277,7 +279,7 @@ export default function AddictSlide({ data, onNext, onPrevious }: SlideProps) {
 
                   <div className="flex-1">
                     <div className="text-xs font-bold tracking-widest text-green-400 uppercase mb-1">
-                      Jour Favori
+                      {t('slide.addict.favoriteDay')}
                     </div>
                     <div
                       className="text-3xl font-black tracking-tight capitalize"
@@ -289,7 +291,7 @@ export default function AddictSlide({ data, onNext, onPrevious }: SlideProps) {
                       {logins.peakDay}
                     </div>
                     <div className="text-xs text-gray-500 mt-1">
-                      ton jour le plus actif
+                      {t('slide.addict.mostActiveDay')}
                     </div>
                   </div>
                 </div>
@@ -308,10 +310,10 @@ export default function AddictSlide({ data, onNext, onPrevious }: SlideProps) {
           <p className="text-sm text-gray-500 italic flex items-center gap-2 justify-center">
             <Clock className="w-4 h-4 text-sky-400" />
             {logins.totalLogins > 365
-              ? "Accro confirmé"
+              ? t('slide.addict.confirmedAddict')
               : logins.totalLogins > 180
-              ? "Très régulier"
-              : "Connecté modéré"}
+              ? t('slide.addict.veryRegular')
+              : t('slide.addict.moderatelyConnected')}
           </p>
         </motion.div>
 
@@ -327,7 +329,7 @@ export default function AddictSlide({ data, onNext, onPrevious }: SlideProps) {
             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
             className="text-gray-600 text-xs tracking-widest uppercase font-semibold"
           >
-            Tap pour continuer
+            {t('slide.addict.tapToContinue')}
           </motion.div>
         </motion.div>
       </div>

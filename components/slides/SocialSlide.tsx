@@ -4,9 +4,11 @@ import { motion } from 'framer-motion';
 import { SlideProps } from '@/types';
 import { Users, MessageSquare, Flag } from 'lucide-react';
 import AnimatedCounter from '../AnimatedCounter';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function SocialSlide({ data, onNext, onPrevious }: SlideProps) {
   const { social } = data;
+  const { t } = useLanguage();
 
   // Skip if no social data
   if (social.totalMessages === 0 && social.totalClubs === 0) {
@@ -109,9 +111,9 @@ export default function SocialSlide({ data, onNext, onPrevious }: SlideProps) {
               letterSpacing: '0.05em',
             }}
           >
-            Social Butterfly
+            {t('slide.socialSlide.title')}
           </h2>
-          <p className="text-sm text-gray-400 tracking-wide">Ton réseau en 2025</p>
+          <p className="text-sm text-gray-400 tracking-wide">{t('slide.socialSlide.subtitle')}</p>
         </motion.div>
 
         <div className="w-full max-w-sm space-y-4">
@@ -171,7 +173,7 @@ export default function SocialSlide({ data, onNext, onPrevious }: SlideProps) {
 
                   <div className="flex-1">
                     <div className="text-xs font-bold tracking-widest text-blue-400 uppercase mb-1">
-                      Messages Envoyés
+                      {t('slide.socialSlide.messagesSent')}
                     </div>
                     <div
                       className="text-5xl font-black tracking-tight"
@@ -182,7 +184,7 @@ export default function SocialSlide({ data, onNext, onPrevious }: SlideProps) {
                     >
                       <AnimatedCounter to={social.totalMessages} duration={2} delay={0.8} />
                     </div>
-                    <div className="text-xs text-gray-500 mt-1">conversations</div>
+                    <div className="text-xs text-gray-500 mt-1">{t('slide.socialSlide.conversations')}</div>
                   </div>
                 </div>
               </div>
@@ -245,7 +247,7 @@ export default function SocialSlide({ data, onNext, onPrevious }: SlideProps) {
 
                   <div className="flex-1">
                     <div className="text-xs font-bold tracking-widest text-purple-400 uppercase mb-1">
-                      Clubs Rejoints
+                      {t('slide.socialSlide.clubsJoined')}
                     </div>
                     <div
                       className="text-5xl font-black tracking-tight"
@@ -256,7 +258,7 @@ export default function SocialSlide({ data, onNext, onPrevious }: SlideProps) {
                     >
                       <AnimatedCounter to={social.totalClubs} duration={2} delay={1} />
                     </div>
-                    <div className="text-xs text-gray-500 mt-1">communautés</div>
+                    <div className="text-xs text-gray-500 mt-1">{t('slide.socialSlide.communities')}</div>
                   </div>
                 </div>
               </div>
@@ -278,7 +280,7 @@ export default function SocialSlide({ data, onNext, onPrevious }: SlideProps) {
                 }}
               >
                 <div className="text-center">
-                  <div className="text-xs text-gray-400 mb-1">Indice Social</div>
+                  <div className="text-xs text-gray-400 mb-1">{t('slide.socialSlide.socialIndex')}</div>
                   <div className="flex items-center justify-center gap-2">
                     <div
                       className="text-3xl font-black"
@@ -297,10 +299,10 @@ export default function SocialSlide({ data, onNext, onPrevious }: SlideProps) {
                   </div>
                   <div className="text-xs text-gray-500 mt-1">
                     {social.totalMessages + social.totalClubs * 10 > 100
-                      ? "Super connecté"
+                      ? t('slide.socialSlide.superConnected')
                       : social.totalMessages + social.totalClubs * 10 > 50
-                      ? "Bien intégré"
-                      : "Réseau en croissance"}
+                      ? t('slide.socialSlide.wellIntegrated')
+                      : t('slide.socialSlide.networkGrowing')}
                   </div>
                 </div>
               </div>
@@ -317,7 +319,7 @@ export default function SocialSlide({ data, onNext, onPrevious }: SlideProps) {
         >
           <p className="text-sm text-gray-500 italic flex items-center gap-2 justify-center">
             <Users className="w-4 h-4 text-blue-400" />
-            Connecté à la communauté
+            {t('slide.socialSlide.connectedToCommunity')}
           </p>
         </motion.div>
 
@@ -333,7 +335,7 @@ export default function SocialSlide({ data, onNext, onPrevious }: SlideProps) {
             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
             className="text-gray-600 text-xs tracking-widest uppercase font-semibold"
           >
-            Tap pour continuer
+            {t('slide.socialSlide.tapToContinue')}
           </motion.div>
         </motion.div>
       </div>

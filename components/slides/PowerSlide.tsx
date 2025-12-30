@@ -4,8 +4,10 @@ import { motion } from 'framer-motion';
 import { SlideProps } from '@/types';
 import { Zap, TrendingUp } from 'lucide-react';
 import AnimatedCounter from '../AnimatedCounter';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function PowerSlide({ data, onNext, onPrevious }: SlideProps) {
+  const { t } = useLanguage();
   const { powerStats } = data;
 
   if (!powerStats) {
@@ -109,9 +111,9 @@ export default function PowerSlide({ data, onNext, onPrevious }: SlideProps) {
               letterSpacing: '0.05em',
             }}
           >
-            La Puissance
+            {t('slide.power.title')}
           </h2>
-          <p className="text-sm text-gray-400 tracking-wide">Watts générés en 2025</p>
+          <p className="text-sm text-gray-400 tracking-wide">{t('slide.power.subtitle')}</p>
         </motion.div>
 
         <div className="w-full max-w-sm space-y-4">
@@ -148,7 +150,7 @@ export default function PowerSlide({ data, onNext, onPrevious }: SlideProps) {
               <div className="relative text-center">
                 <div className="flex items-center justify-center gap-2 mb-2">
                   <TrendingUp className="w-5 h-5 text-yellow-400" />
-                  <div className="text-xs text-yellow-400 uppercase tracking-wider font-bold">Pic Maximum</div>
+                  <div className="text-xs text-yellow-400 uppercase tracking-wider font-bold">{t('slide.power.peakPower')}</div>
                 </div>
                 <div
                   className="text-6xl font-black mb-2"
@@ -160,10 +162,10 @@ export default function PowerSlide({ data, onNext, onPrevious }: SlideProps) {
                   <AnimatedCounter to={powerStats.peakPower} duration={2} delay={0.8} />
                 </div>
                 <div className="text-lg text-gray-300 font-semibold mb-1">
-                  watts
+                  {t('slide.power.watts')}
                 </div>
                 <div className="text-xs text-gray-500">
-                  sortie la plus puissante
+                  {t('slide.power.mostPowerfulOutput')}
                 </div>
               </div>
             </div>
@@ -201,7 +203,7 @@ export default function PowerSlide({ data, onNext, onPrevious }: SlideProps) {
 
               <div className="relative text-center">
                 <div className="text-xs text-blue-400 uppercase tracking-wider font-bold mb-2">
-                  Puissance Moyenne
+                  {t('slide.power.averagePower')}
                 </div>
                 <div
                   className="text-5xl font-black mb-2"
@@ -213,10 +215,10 @@ export default function PowerSlide({ data, onNext, onPrevious }: SlideProps) {
                   <AnimatedCounter to={powerStats.averagePower} duration={2} delay={1} />
                 </div>
                 <div className="text-lg text-gray-300 font-semibold mb-1">
-                  watts
+                  {t('slide.power.watts')}
                 </div>
                 <div className="text-xs text-gray-500">
-                  sur toutes les sorties avec capteur
+                  {t('slide.power.onAllRidesWithSensor')}
                 </div>
               </div>
             </div>
@@ -236,7 +238,7 @@ export default function PowerSlide({ data, onNext, onPrevious }: SlideProps) {
               }}
             >
               <div className="text-center">
-                <div className="text-xs text-gray-400 mb-1">Données de puissance</div>
+                <div className="text-xs text-gray-400 mb-1">{t('slide.power.powerData')}</div>
                 <div className="flex items-center justify-center gap-2">
                   <div
                     className="text-3xl font-black"
@@ -254,7 +256,7 @@ export default function PowerSlide({ data, onNext, onPrevious }: SlideProps) {
                   </div>
                 </div>
                 <div className="text-xs text-gray-500 mt-1">
-                  activités avec capteur
+                  {t('slide.power.activitiesWithSensor')}
                 </div>
               </div>
             </div>
@@ -270,7 +272,7 @@ export default function PowerSlide({ data, onNext, onPrevious }: SlideProps) {
         >
           <p className="text-sm text-gray-500 italic flex items-center gap-2 justify-center">
             <Zap className="w-4 h-4 text-yellow-400" />
-            Électrisant
+            {t('slide.power.electrifying')}
           </p>
         </motion.div>
 
@@ -286,7 +288,7 @@ export default function PowerSlide({ data, onNext, onPrevious }: SlideProps) {
             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
             className="text-gray-600 text-xs tracking-widest uppercase font-semibold"
           >
-            Tap pour continuer
+            {t('slide.power.tapToContinue')}
           </motion.div>
         </motion.div>
       </div>

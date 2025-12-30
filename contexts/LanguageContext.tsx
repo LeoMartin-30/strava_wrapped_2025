@@ -30,6 +30,7 @@ const translations: Record<Language, Record<string, string>> = {
     'upload.pleaseWait': 'Merci de patienter',
     'upload.error.zipOnly': 'Merci de télécharger votre export Strava au format ZIP',
     'upload.error.tooLarge': 'Le fichier doit faire moins de 2 Go',
+    'upload.error.noActivities': 'Aucune activité trouvée dans ton export Strava',
 
     // Tutorial
     'tutorial.howTo': 'Comment obtenir ton export Strava :',
@@ -264,6 +265,7 @@ const translations: Record<Language, Record<string, string>> = {
     'upload.pleaseWait': 'Please wait',
     'upload.error.zipOnly': 'Please upload your Strava export as a ZIP file',
     'upload.error.tooLarge': 'File must be less than 2 GB',
+    'upload.error.noActivities': 'No activities found in your Strava export',
 
     // Tutorial
     'tutorial.howTo': 'How to get your Strava export:',

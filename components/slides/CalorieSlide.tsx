@@ -4,9 +4,11 @@ import { motion } from 'framer-motion';
 import { SlideProps } from '@/types';
 import { Flame, Coffee } from 'lucide-react';
 import AnimatedCounter from '../AnimatedCounter';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function CalorieSlide({ data, onNext, onPrevious }: SlideProps) {
   const { totalCalories, activitiesWithCalories, totalActivities } = data;
+  const { t } = useLanguage();
 
   if (totalCalories === 0) {
     return null;
@@ -111,9 +113,9 @@ export default function CalorieSlide({ data, onNext, onPrevious }: SlideProps) {
               letterSpacing: '0.05em',
             }}
           >
-            Le Carburant
+            {t('slide.calorie.title')}
           </h2>
-          <p className="text-sm text-gray-400 tracking-wide">Calories brûlées en 2025</p>
+          <p className="text-sm text-gray-400 tracking-wide">{t('slide.calorie.subtitle')}</p>
         </motion.div>
 
         {/* Main Calories Display */}
@@ -158,10 +160,13 @@ export default function CalorieSlide({ data, onNext, onPrevious }: SlideProps) {
                 <AnimatedCounter to={totalCalories} duration={2} delay={0.8} />
               </div>
               <div className="text-lg text-gray-300 font-semibold mb-3">
-                kcal brûlées
+                {t('slide.calorie.kcalBurned')}
               </div>
               <div className="text-xs text-gray-500">
-                Sur {activitiesWithCalories} activité{activitiesWithCalories > 1 ? 's' : ''} ({percentageWithCalories}% du total)
+                {t('slide.calorie.onActivities')
+                  .replace('{count}', activitiesWithCalories.toString())
+                  .replace('{activityWord}', activitiesWithCalories > 1 ? t('slide.calorie.activities') : t('slide.calorie.activity'))
+                  .replace('{percentage}', percentageWithCalories.toString())}
               </div>
             </div>
           </div>
@@ -214,7 +219,7 @@ export default function CalorieSlide({ data, onNext, onPrevious }: SlideProps) {
                 </motion.div>
                 <div>
                   <div className="text-sm font-bold text-yellow-400 uppercase tracking-wider mb-1">
-                    Équivalent
+                    {t('slide.calorie.equivalent')}
                   </div>
                   <div className="text-xs text-gray-500">
                     @ 200 kcal/croissant
@@ -234,7 +239,7 @@ export default function CalorieSlide({ data, onNext, onPrevious }: SlideProps) {
                 >
                   <AnimatedCounter to={croissants} duration={2} delay={1.4} />
                 </div>
-                <div className="text-sm text-gray-400 mt-1">croissants</div>
+                <div className="text-sm text-gray-400 mt-1">{t('slide.calorie.croissants')}</div>
               </div>
             </div>
           </div>
@@ -249,7 +254,7 @@ export default function CalorieSlide({ data, onNext, onPrevious }: SlideProps) {
         >
           <p className="text-sm text-gray-500 italic flex items-center gap-2 justify-center">
             <Coffee className="w-4 h-4" />
-            La boulangerie te remercie
+            {t('slide.calorie.bakeryThanks')}
           </p>
         </motion.div>
 
@@ -265,7 +270,7 @@ export default function CalorieSlide({ data, onNext, onPrevious }: SlideProps) {
             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
             className="text-gray-600 text-xs tracking-widest uppercase font-semibold"
           >
-            Tap pour continuer
+            {t('slide.calorie.tapToContinue')}
           </motion.div>
         </motion.div>
       </div>

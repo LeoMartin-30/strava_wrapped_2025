@@ -4,8 +4,10 @@ import { motion } from 'framer-motion';
 import { SlideProps } from '@/types';
 import { TrendingDown, Zap } from 'lucide-react';
 import AnimatedCounter from '../AnimatedCounter';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function GravitySlide({ data, onNext, onPrevious }: SlideProps) {
+  const { t } = useLanguage();
   const { totalElevationLoss } = data;
 
   if (totalElevationLoss === 0) {
@@ -119,9 +121,9 @@ export default function GravitySlide({ data, onNext, onPrevious }: SlideProps) {
               letterSpacing: '0.05em',
             }}
           >
-            La Gravité
+            {t('slide.gravity.title')}
           </h2>
-          <p className="text-sm text-gray-400 tracking-wide">Vous avez défié la descente</p>
+          <p className="text-sm text-gray-400 tracking-wide">{t('slide.gravity.subtitle')}</p>
         </motion.div>
 
         {/* Total Descent Card */}
@@ -157,7 +159,7 @@ export default function GravitySlide({ data, onNext, onPrevious }: SlideProps) {
 
             <div className="relative text-center">
               <div className="text-xs font-bold tracking-widest text-purple-400 uppercase mb-2">
-                Dénivelé Négatif
+                {t('slide.gravity.negativeElevation')}
               </div>
               <div
                 className="text-7xl font-black mb-2"
@@ -169,7 +171,7 @@ export default function GravitySlide({ data, onNext, onPrevious }: SlideProps) {
                 <AnimatedCounter to={totalElevationLoss} duration={2} delay={0.8} />
               </div>
               <div className="text-lg text-gray-300 font-semibold">
-                mètres de descente
+                {t('slide.gravity.metersOfDescent')}
               </div>
             </div>
           </div>
@@ -219,7 +221,7 @@ export default function GravitySlide({ data, onNext, onPrevious }: SlideProps) {
 
               <div className="flex-1">
                 <div className="text-xs font-bold tracking-widest text-orange-400 uppercase mb-1">
-                  Vos genoux ont survécu à
+                  {t('slide.gravity.kneesImpacts')}
                 </div>
                 <div
                   className="text-4xl font-black"
@@ -230,7 +232,7 @@ export default function GravitySlide({ data, onNext, onPrevious }: SlideProps) {
                 >
                   <AnimatedCounter to={kneeImpacts} duration={1.5} delay={1.2} />
                 </div>
-                <div className="text-xs text-gray-500 mt-1">impacts équivalents</div>
+                <div className="text-xs text-gray-500 mt-1">{t('slide.gravity.equivalentImpacts')}</div>
               </div>
             </div>
           </div>
@@ -244,7 +246,7 @@ export default function GravitySlide({ data, onNext, onPrevious }: SlideProps) {
           className="mt-6 text-center"
         >
           <p className="text-sm text-gray-500 italic">
-            Vos articulations méritent une médaille 🏅
+            {t('slide.gravity.jointsDeserveMedal')}
           </p>
         </motion.div>
 
@@ -260,7 +262,7 @@ export default function GravitySlide({ data, onNext, onPrevious }: SlideProps) {
             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
             className="text-gray-600 text-xs tracking-widest uppercase font-semibold"
           >
-            Tap pour continuer
+            {t('slide.gravity.tapToContinue')}
           </motion.div>
         </motion.div>
       </div>

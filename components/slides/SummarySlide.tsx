@@ -5,8 +5,10 @@ import { SlideProps } from '@/types';
 import { Trophy, RotateCcw, Star, Sparkles, Camera } from 'lucide-react';
 import { toPng } from 'html-to-image';
 import { useState } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function SummarySlide({ data, onNext, onPrevious }: SlideProps) {
+  const { t } = useLanguage();
   const [isExporting, setIsExporting] = useState(false);
 
   const topActivityType = Object.entries(data.activitiesByType).reduce(
@@ -42,8 +44,8 @@ export default function SummarySlide({ data, onNext, onPrevious }: SlideProps) {
       if (navigator.share && navigator.canShare?.({ files: [file] })) {
         await navigator.share({
           files: [file],
-          title: 'Mon Strava Wrapped 2025',
-          text: '🔥 Mon récap Strava 2025',
+          title: t('slide.summary.shareTitle'),
+          text: `🔥 ${t('slide.summary.shareText')}`,
         });
       } else {
         // Fallback: Download
@@ -56,7 +58,7 @@ export default function SummarySlide({ data, onNext, onPrevious }: SlideProps) {
       }
     } catch (error) {
       console.error('❌ Export failed:', error);
-      alert('Erreur lors de l\'export de l\'image');
+      alert(t('slide.summary.exportError'));
     } finally {
       setIsExporting(false);
     }
@@ -263,9 +265,9 @@ export default function SummarySlide({ data, onNext, onPrevious }: SlideProps) {
               letterSpacing: '0.05em',
             }}
           >
-            Année Incroyable!
+            {t('slide.summary.incredibleYear')}
           </h2>
-          <p className="text-xl text-gray-400">Wrapped 2025</p>
+          <p className="text-xl text-gray-400">{t('slide.summary.wrapped')}</p>
         </motion.div>
 
         {/* Key Stats Summary Cards */}
@@ -311,7 +313,7 @@ export default function SummarySlide({ data, onNext, onPrevious }: SlideProps) {
                 >
                   {data.totalActivities}
                 </div>
-                <div className="text-lg text-gray-300 font-semibold">Activités Totales</div>
+                <div className="text-lg text-gray-300 font-semibold">{t('slide.summary.totalActivities')}</div>
               </div>
             </div>
           </motion.div>
@@ -348,9 +350,9 @@ export default function SummarySlide({ data, onNext, onPrevious }: SlideProps) {
                     textShadow: '0 2px 20px rgba(255, 255, 255, 0.3)',
                   }}
                 >
-                  {data.totalHours} <span className="text-3xl">hrs</span>
+                  {data.totalHours} <span className="text-3xl">{t('slide.summary.hours')}</span>
                 </div>
-                <div className="text-lg text-gray-300 font-semibold">Temps d'Entraînement</div>
+                <div className="text-lg text-gray-300 font-semibold">{t('slide.summary.trainingTime')}</div>
               </div>
             </div>
           </motion.div>
@@ -412,7 +414,7 @@ export default function SummarySlide({ data, onNext, onPrevious }: SlideProps) {
 
                 <div className="flex-1">
                   <div className="text-xs font-bold tracking-widest text-green-400 uppercase mb-1">
-                    Activité Préférée
+                    {t('slide.summary.favoriteActivity')}
                   </div>
                   <div
                     className="text-3xl font-black mb-1"
@@ -424,7 +426,7 @@ export default function SummarySlide({ data, onNext, onPrevious }: SlideProps) {
                     {topActivityType.type}
                   </div>
                   <div className="text-sm text-gray-400">
-                    {topActivityType.stats.count} fois
+                    {topActivityType.stats.count} {t('slide.summary.times')}
                   </div>
                 </div>
               </div>
@@ -469,7 +471,7 @@ export default function SummarySlide({ data, onNext, onPrevious }: SlideProps) {
             <div className="relative flex items-center gap-3">
               <RotateCcw className="w-5 h-5 text-white group-hover:rotate-180 transition-transform duration-500" />
               <span className="text-white font-black text-lg tracking-wide">
-                Recommencer
+                {t('slide.summary.restart')}
               </span>
             </div>
           </button>
@@ -483,7 +485,7 @@ export default function SummarySlide({ data, onNext, onPrevious }: SlideProps) {
           className="text-center"
         >
           <p className="text-gray-500 text-sm mb-1">
-            Continuez à bouger. Continuez à vous surpasser.
+            {t('slide.summary.keepMoving')}
           </p>
           <p
             className="text-lg font-black"
@@ -493,7 +495,7 @@ export default function SummarySlide({ data, onNext, onPrevious }: SlideProps) {
               WebkitTextFillColor: 'transparent',
             }}
           >
-            Rendez-vous en 2026!
+            {t('slide.summary.seeYouIn2026')}
           </p>
         </motion.div>
       </div>

@@ -4,8 +4,10 @@ import { motion } from 'framer-motion';
 import { SlideProps } from '@/types';
 import { Heart, Activity } from 'lucide-react';
 import AnimatedCounter from '../AnimatedCounter';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function IntensitySlide({ data, onNext, onPrevious }: SlideProps) {
+  const { t } = useLanguage();
   const { heartRateZones } = data;
 
   if (heartRateZones.length === 0) {
@@ -118,9 +120,9 @@ export default function IntensitySlide({ data, onNext, onPrevious }: SlideProps)
               letterSpacing: '0.05em',
             }}
           >
-            Zones Cardiaques
+            {t('slide.intensity.title')}
           </h2>
-          <p className="text-sm text-gray-400 tracking-wide">Distribution de ton intensité</p>
+          <p className="text-sm text-gray-400 tracking-wide">{t('slide.intensity.subtitle')}</p>
         </motion.div>
 
         {/* Heart Rate Zones Display */}
@@ -157,7 +159,7 @@ export default function IntensitySlide({ data, onNext, onPrevious }: SlideProps)
                       />
                       <div>
                         <div className="text-sm font-bold text-white">{zone.zone}</div>
-                        <div className="text-xs text-gray-500">{zone.count} activités</div>
+                        <div className="text-xs text-gray-500">{zone.count} {t('common.activities')}</div>
                       </div>
                     </div>
 
@@ -227,7 +229,7 @@ export default function IntensitySlide({ data, onNext, onPrevious }: SlideProps)
             <div className="relative text-center">
               <div className="flex items-center justify-center gap-2 mb-2">
                 <Activity className="w-4 h-4" style={{ color: dominantZone.color }} />
-                <div className="text-xs text-gray-400 uppercase tracking-wider">Zone dominante</div>
+                <div className="text-xs text-gray-400 uppercase tracking-wider">{t('slide.intensity.dominantZone')}</div>
               </div>
               <div
                 className="text-3xl font-black mb-1"
@@ -239,7 +241,7 @@ export default function IntensitySlide({ data, onNext, onPrevious }: SlideProps)
                 {dominantZone.zone}
               </div>
               <div className="text-sm text-gray-400">
-                Passé {dominantZone.percentage}% du temps dans cette zone
+                {t('slide.intensity.spentInZone').replace('{percentage}', dominantZone.percentage.toString())}
               </div>
             </div>
           </div>
@@ -257,7 +259,7 @@ export default function IntensitySlide({ data, onNext, onPrevious }: SlideProps)
             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
             className="text-gray-600 text-xs tracking-widest uppercase font-semibold"
           >
-            Tap pour continuer
+            {t('slide.intensity.tapToContinue')}
           </motion.div>
         </motion.div>
       </div>

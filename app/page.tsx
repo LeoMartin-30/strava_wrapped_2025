@@ -24,7 +24,7 @@ import MoteurSlide from '@/components/slides/MoteurSlide';
 import SocialButterflySlide from '@/components/slides/SocialButterflySlide';
 import SummarySlide from '@/components/slides/SummarySlide';
 import { ThemeProvider, useTheme } from '@/contexts/ThemeContext';
-import { LanguageProvider } from '@/contexts/LanguageContext';
+import { LanguageProvider, useLanguage } from '@/contexts/LanguageContext';
 import { filterActivitiesByYear } from '@/lib/csvParser';
 import { processActivities } from '@/lib/dataProcessor';
 import { parseStravaZip } from '@/lib/zipParser';
@@ -35,6 +35,7 @@ import { ProcessedStats } from '@/types';
 
 function HomeContent() {
   const { applyTheme } = useTheme();
+  const { t } = useLanguage();
   const [stats, setStats] = useState<ProcessedStats | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -53,7 +54,7 @@ function HomeContent() {
       const zipData = await parseStravaZip(file, year);
 
       if (zipData.activities.length === 0) {
-        throw new Error('Aucune activité trouvée dans ton export Strava');
+        throw new Error(t('upload.error.noActivities'));
       }
 
       // Filter activities for 2025
@@ -294,9 +295,9 @@ function HomeContent() {
           <div className="h-full flex items-center justify-center p-8">
             <div className="text-center">
               <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-strava-orange mx-auto mb-4"></div>
-              <p className="text-white text-xl font-semibold mb-2">Analyse de tes exploits...</p>
-              <p className="text-gray-400 text-sm">Extraction des données du ZIP en cours</p>
-              <p className="text-gray-500 text-xs mt-4">Cela peut prendre quelques secondes pour les gros fichiers</p>
+              <p className="text-white text-xl font-semibold mb-2">{t('upload.loading')}</p>
+              <p className="text-gray-400 text-sm">{t('upload.extracting')}</p>
+              <p className="text-gray-500 text-xs mt-4">{t('upload.wait')}</p>
             </div>
           </div>
         )}

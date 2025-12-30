@@ -4,9 +4,11 @@ import { motion } from 'framer-motion';
 import { SlideProps } from '@/types';
 import { Trees, Award } from 'lucide-react';
 import AnimatedCounter from '../AnimatedCounter';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function TrailSlide({ data, onNext, onPrevious }: SlideProps) {
   const { trailFactor } = data;
+  const { t } = useLanguage();
 
   // Only show if there's trail activity
   if (trailFactor === 0) {
@@ -14,9 +16,9 @@ export default function TrailSlide({ data, onNext, onPrevious }: SlideProps) {
   }
 
   const getBadgeMessage = (factor: number) => {
-    if (factor >= 50) return "Maître des Sentiers";
-    if (factor >= 20) return "Explorateur de Sentiers";
-    return "Curieux des Sentiers";
+    if (factor >= 50) return t('slide.trail.trailMaster');
+    if (factor >= 20) return t('slide.trail.trailExplorer');
+    return t('slide.trail.trailCurious');
   };
 
   const badgeMessage = getBadgeMessage(trailFactor);
@@ -125,9 +127,9 @@ export default function TrailSlide({ data, onNext, onPrevious }: SlideProps) {
               letterSpacing: '0.05em',
             }}
           >
-            Facteur Trail
+            {t('slide.trail.title')}
           </h2>
-          <p className="text-sm text-gray-400 tracking-wide">Vous avez quitté le bitume</p>
+          <p className="text-sm text-gray-400 tracking-wide">{t('slide.trail.subtitle')}</p>
         </motion.div>
 
         {/* Trail Percentage - Big Reveal */}
@@ -189,7 +191,7 @@ export default function TrailSlide({ data, onNext, onPrevious }: SlideProps) {
                 <AnimatedCounter to={trailFactor} duration={2} delay={0.8} suffix="%" />
               </div>
               <div className="text-lg text-gray-300 font-semibold">
-                de votre distance sur les sentiers
+                {t('slide.trail.ofDistanceOnTrails')}
               </div>
             </div>
           </div>
@@ -236,7 +238,7 @@ export default function TrailSlide({ data, onNext, onPrevious }: SlideProps) {
 
                 <div className="flex-1">
                   <div className="text-xs font-bold tracking-widest text-orange-400 uppercase mb-1">
-                    Badge débloqué
+                    {t('slide.trail.badgeUnlocked')}
                   </div>
                   <div
                     className="text-2xl font-black"
@@ -262,10 +264,10 @@ export default function TrailSlide({ data, onNext, onPrevious }: SlideProps) {
         >
           <p className="text-sm text-gray-500 italic">
             {trailFactor >= 50
-              ? "Vous êtes né(e) pour les sentiers 🏔️"
+              ? t('slide.trail.bornForTrails')
               : trailFactor >= 20
-              ? "La nature vous appelle 🌿"
-              : "Continuez d'explorer 🥾"}
+              ? t('slide.trail.natureCalls')
+              : t('slide.trail.keepExploring')}
           </p>
         </motion.div>
 
@@ -281,7 +283,7 @@ export default function TrailSlide({ data, onNext, onPrevious }: SlideProps) {
             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
             className="text-gray-600 text-xs tracking-widest uppercase font-semibold"
           >
-            Tap pour continuer
+            {t('slide.trail.tapToContinue')}
           </motion.div>
         </motion.div>
       </div>

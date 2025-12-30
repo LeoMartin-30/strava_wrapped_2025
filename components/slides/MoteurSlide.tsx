@@ -4,9 +4,11 @@ import { motion } from 'framer-motion';
 import { SlideProps } from '@/types';
 import { Zap, Heart, Gauge } from 'lucide-react';
 import AnimatedCounter from '../AnimatedCounter';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function MoteurSlide({ data, onNext, onPrevious }: SlideProps) {
   const { preferences, powerStats, heartRateZones } = data;
+  const { t } = useLanguage();
 
   // Skip if no FTP or HR data
   if (!preferences || (preferences.ftp === 0 && preferences.maxHR === 0)) {
@@ -112,9 +114,9 @@ export default function MoteurSlide({ data, onNext, onPrevious }: SlideProps) {
               letterSpacing: '0.05em',
             }}
           >
-            Le Moteur
+            {t('slide.moteur.title')}
           </h2>
-          <p className="text-sm text-gray-400 tracking-wide">Tes paramètres de performance</p>
+          <p className="text-sm text-gray-400 tracking-wide">{t('slide.moteur.subtitle')}</p>
         </motion.div>
 
         <div className="w-full max-w-sm space-y-4">
@@ -168,7 +170,7 @@ export default function MoteurSlide({ data, onNext, onPrevious }: SlideProps) {
 
                   <div className="flex-1">
                     <div className="text-xs font-bold tracking-widest text-yellow-400 uppercase mb-1">
-                      Seuil de Puissance (FTP)
+                      {t('slide.moteur.ftpThreshold')}
                     </div>
                     <div
                       className="text-5xl font-black tracking-tight"
@@ -179,19 +181,19 @@ export default function MoteurSlide({ data, onNext, onPrevious }: SlideProps) {
                     >
                       <AnimatedCounter to={preferences.ftp} duration={2} delay={0.8} />
                     </div>
-                    <div className="text-xs text-gray-500 mt-1">watts</div>
+                    <div className="text-xs text-gray-500 mt-1">{t('slide.power.watts')}</div>
                   </div>
                 </div>
 
                 {/* FTP Zones */}
                 {hasPowerData && (
                   <div className="mt-4 pt-4 border-t border-yellow-400/20">
-                    <div className="text-xs text-gray-400 mb-2">Puissance moyenne en activité</div>
+                    <div className="text-xs text-gray-400 mb-2">{t('slide.moteur.averagePowerInActivity')}</div>
                     <div className="flex items-baseline gap-2">
                       <span className="text-2xl font-bold text-yellow-300">
                         <AnimatedCounter to={powerStats.averagePower} duration={2} delay={1} />
                       </span>
-                      <span className="text-sm text-gray-500">watts</span>
+                      <span className="text-sm text-gray-500">{t('slide.power.watts')}</span>
                       <span className="text-xs text-gray-600 ml-2">
                         ({Math.round((powerStats.averagePower / preferences.ftp) * 100)}% FTP)
                       </span>
@@ -258,7 +260,7 @@ export default function MoteurSlide({ data, onNext, onPrevious }: SlideProps) {
 
                   <div className="flex-1">
                     <div className="text-xs font-bold tracking-widest text-red-400 uppercase mb-1">
-                      Fréquence Cardiaque Max
+                      {t('slide.moteur.maxHeartRate')}
                     </div>
                     <div
                       className="text-5xl font-black tracking-tight"
@@ -269,14 +271,14 @@ export default function MoteurSlide({ data, onNext, onPrevious }: SlideProps) {
                     >
                       <AnimatedCounter to={preferences.maxHR} duration={2} delay={1} />
                     </div>
-                    <div className="text-xs text-gray-500 mt-1">bpm</div>
+                    <div className="text-xs text-gray-500 mt-1">{t('slide.moteur.bpm')}</div>
                   </div>
                 </div>
 
                 {/* HR Zones Preview */}
                 {hasHRData && (
                   <div className="mt-4 pt-4 border-t border-red-400/20">
-                    <div className="text-xs text-gray-400 mb-2">Zones cardiaques les plus fréquentes</div>
+                    <div className="text-xs text-gray-400 mb-2">{t('slide.moteur.mostFrequentZones')}</div>
                     <div className="flex gap-2">
                       {heartRateZones.slice(0, 3).map((zone, i) => (
                         <div
@@ -310,7 +312,7 @@ export default function MoteurSlide({ data, onNext, onPrevious }: SlideProps) {
         >
           <p className="text-sm text-gray-500 italic flex items-center gap-2 justify-center">
             <Zap className="w-4 h-4 text-yellow-400" />
-            Machine calibrée pour la performance
+            {t('slide.moteur.calibratedForPerformance')}
           </p>
         </motion.div>
 
@@ -326,7 +328,7 @@ export default function MoteurSlide({ data, onNext, onPrevious }: SlideProps) {
             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
             className="text-gray-600 text-xs tracking-widest uppercase font-semibold"
           >
-            Tap pour continuer
+            {t('slide.moteur.tapToContinue')}
           </motion.div>
         </motion.div>
       </div>

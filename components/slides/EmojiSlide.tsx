@@ -3,9 +3,11 @@
 import { motion } from 'framer-motion';
 import { SlideProps } from '@/types';
 import { Smile, Award, Trophy, Medal } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function EmojiSlide({ data, onNext, onPrevious }: SlideProps) {
   const { topEmojis } = data;
+  const { t } = useLanguage();
 
   if (topEmojis.length === 0) {
     return null;
@@ -115,9 +117,9 @@ export default function EmojiSlide({ data, onNext, onPrevious }: SlideProps) {
               letterSpacing: '0.05em',
             }}
           >
-            Humeur en Émojis
+            {t('slide.emoji.title')}
           </h2>
-          <p className="text-sm text-gray-400 tracking-wide">Vos activités racontées en symboles</p>
+          <p className="text-sm text-gray-400 tracking-wide">{t('slide.emoji.subtitle')}</p>
         </motion.div>
 
         {/* Top 3 Emojis - Big Display */}
@@ -321,7 +323,7 @@ export default function EmojiSlide({ data, onNext, onPrevious }: SlideProps) {
           className="text-center"
         >
           <p className="text-sm text-gray-500 italic">
-            Vos émotions en mouvement 💫
+            {t('slide.emoji.emotionsInMotion')}
           </p>
         </motion.div>
 
@@ -337,7 +339,7 @@ export default function EmojiSlide({ data, onNext, onPrevious }: SlideProps) {
             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
             className="text-gray-600 text-xs tracking-widest uppercase font-semibold"
           >
-            Tap pour continuer
+            {t('slide.emoji.tapToContinue')}
           </motion.div>
         </motion.div>
       </div>

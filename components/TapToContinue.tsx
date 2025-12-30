@@ -2,12 +2,14 @@
 
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface TapToContinueProps {
   delay?: number; // Delay in milliseconds before showing (default 15000ms = 15s)
 }
 
 export default function TapToContinue({ delay = 15000 }: TapToContinueProps) {
+  const { t } = useLanguage();
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -32,7 +34,7 @@ export default function TapToContinue({ delay = 15000 }: TapToContinueProps) {
         transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
         className="text-gray-600 text-xs tracking-widest uppercase font-semibold"
       >
-        Tap pour continuer
+        {t('common.tapToContinue')}
       </motion.div>
     </motion.div>
   );
