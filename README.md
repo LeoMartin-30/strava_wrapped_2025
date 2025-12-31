@@ -33,7 +33,8 @@ A privacy-first, beautifully designed year-in-review experience for Strava athle
 16. **Addict**: Login patterns and peak activity times
 17. **Consistency**: Activity streaks and dedication
 18. **Records**: Personal bests (longest, fastest)
-19. **Summary**: Year recap with confetti celebration
+19. **Badge**: Unique badge showcasing your year.
+20. **Summary**: Year recap with confetti celebration
 
 ### 🔒 Privacy-First Architecture
 - **100% client-side**: Your data never leaves your browser
@@ -174,19 +175,11 @@ colors: {
 }
 ```
 
-## 🌍 Internationalization (i18n)
+## 🌍 Internationalization & Personalization 
 
 ### Supported Languages
 - 🇫🇷 **French** (Français) - Primary language
 - 🇬🇧 **English** - Fully supported
-
-### Language Features
-- ✅ Complete UI translation system using React Context
-- ✅ Language switcher in top-right corner
-- ✅ Persistent language preference (localStorage)
-- ✅ Date/time formatting respects selected language
-- ✅ Number formatting (European vs US standards)
-- ✅ Column-position-based CSV parsing (works with any Strava export language)
 
 ### Adding Your Language
 
@@ -198,6 +191,10 @@ Quick overview:
 3. Test all slides in both languages
 4. Submit a pull request!
 
+### Gender Specifics
+- 🇫🇷 In French, some slides are adapted to gender of the user (data available in profile.csv), to be personnalized : "Chasseur de Kudos" becomes "Chasseuse de Kudos" for example.
+
+
 ## 📄 License
 
 MIT License - Free to use for personal or commercial projects.
@@ -206,10 +203,10 @@ MIT License - Free to use for personal or commercial projects.
 
 - Inspired by [Spotify Wrapped](https://www.spotify.com/wrapped/)
 - Built for the Strava athlete community
-- Next.js and React teams for excellent frameworks
+- Next.js and React
 
 ---
 
-**Built with ❤️ by athletes, for athletes**
+**Built with ❤️ by athlete, for athletes**
 
 *Keep moving. Keep climbing. Keep conquering.*
