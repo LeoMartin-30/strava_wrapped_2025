@@ -8,7 +8,8 @@ import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function KudosSlide({ data, onNext, onPrevious }: SlideProps) {
   const { t } = useLanguage();
-  const { comments, social } = data;
+  const { comments, social, profile } = data;
+  const gender = profile?.gender;
 
   if (comments.length === 0 && social.totalKudos === 0) {
     return null;
@@ -115,7 +116,7 @@ export default function KudosSlide({ data, onNext, onPrevious }: SlideProps) {
               letterSpacing: '0.05em',
             }}
           >
-            {t('slide.kudos.title')}
+            {t('slide.kudos.title', gender)}
           </h2>
           <p className="text-xs text-gray-400 tracking-wide slide-subtitle">{t('slide.kudos.subtitle')}</p>
         </motion.div>

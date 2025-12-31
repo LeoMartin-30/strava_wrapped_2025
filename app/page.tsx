@@ -22,6 +22,7 @@ import KudosSlide from '@/components/slides/KudosSlide';
 import MoteurSlide from '@/components/slides/MoteurSlide';
 import SocialButterflySlide from '@/components/slides/SocialButterflySlide';
 import SummarySlide from '@/components/slides/SummarySlide';
+import BadgeSlide from '@/components/slides/BadgeSlide';
 import { ThemeProvider, useTheme } from '@/contexts/ThemeContext';
 import { LanguageProvider, useLanguage } from '@/contexts/LanguageContext';
 import { filterActivitiesByYear } from '@/lib/csvParser';
@@ -129,6 +130,7 @@ function HomeContent() {
     if (shouldShowSlide('SocialButterflySlide', stats)) names.push('Social Butterfly');
     names.push('Consistency');
     names.push('Records');
+    names.push('Badge');
     names.push('Summary');
 
     return names;
@@ -301,7 +303,10 @@ function HomeContent() {
     // 18. Records (Hall of Fame)
     slides.push(<RecordsSlide key="records" data={stats} onNext={handleNext} onPrevious={handlePrevious} />);
 
-    // 19. Summary (Récapitulatif final)
+    // 19. Badge (Badge Débloqué)
+    slides.push(<BadgeSlide key="badge" data={stats} onNext={handleNext} onPrevious={handlePrevious} />);
+
+    // 20. Summary (Récapitulatif final)
     slides.push(<SummarySlide key="summary" data={stats} onNext={handleNext} onPrevious={handlePrevious} />);
 
     return slides[currentSlide];

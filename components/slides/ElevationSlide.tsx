@@ -8,7 +8,8 @@ import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function ElevationSlide({ data, onNext, onPrevious }: SlideProps) {
   const { t } = useLanguage();
-  const { totalElevation } = data;
+  const { totalElevation, profile } = data;
+  const gender = profile?.gender;
 
   // Famous mountain comparisons (in meters)
   const mountains = [
@@ -122,7 +123,7 @@ export default function ElevationSlide({ data, onNext, onPrevious }: SlideProps)
               letterSpacing: '0.05em',
             }}
           >
-            {t('slide.elevation.title')}
+            {t('slide.elevation.title', gender)}
           </h2>
           <p className="text-xs text-gray-400 tracking-wide slide-subtitle">{t('slide.elevation.subtitle')}</p>
         </motion.div>

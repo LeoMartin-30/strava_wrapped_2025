@@ -8,6 +8,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 export default function IdentitySlide({ data, onNext, onPrevious }: SlideProps) {
   const { t } = useLanguage();
   const { profile } = data;
+  const gender = profile?.gender;
 
   if (!profile) {
     // Fallback if no profile data
@@ -164,7 +165,7 @@ export default function IdentitySlide({ data, onNext, onPrevious }: SlideProps) 
               <div className="flex items-center justify-center gap-2 mb-2">
                 <div className="w-8 h-0.5 bg-gradient-to-r from-transparent via-orange-500 to-transparent" />
                 <span className="text-[10px] font-black tracking-widest text-orange-400 uppercase opacity-70">
-                  {t('slide.identity.certifiedAthlete')}
+                  {t('slide.identity.certifiedAthlete', gender)}
                 </span>
                 <div className="w-8 h-0.5 bg-gradient-to-r from-transparent via-orange-500 to-transparent" />
               </div>

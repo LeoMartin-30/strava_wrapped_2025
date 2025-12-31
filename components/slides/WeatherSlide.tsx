@@ -7,8 +7,9 @@ import AnimatedCounter from '../AnimatedCounter';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function WeatherSlide({ data, onNext, onPrevious }: SlideProps) {
-  const { temperatureRecords } = data;
+  const { temperatureRecords, profile } = data;
   const { t } = useLanguage();
+  const gender = profile?.gender;
 
   if (temperatureRecords.averageTemperature === 0) {
     return null;
@@ -129,7 +130,7 @@ export default function WeatherSlide({ data, onNext, onPrevious }: SlideProps) {
               letterSpacing: '0.05em',
             }}
           >
-            {t('slide.weather.title')}
+            {t('slide.weather.title', gender)}
           </h2>
           <p className="text-xs text-gray-400 tracking-wide slide-subtitle">{t('slide.weather.subtitle')}</p>
         </motion.div>

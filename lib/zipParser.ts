@@ -74,6 +74,7 @@ export interface ProfileData {
   city: string;
   bio: string;
   email: string;
+  gender?: string; // M or F
 }
 
 // Preferences data
@@ -192,6 +193,7 @@ export async function parseStravaZip(file: File, year?: number): Promise<StravaZ
         city: row['Ville'] || '',
         bio: row['Description'] || '',
         email: row['Adresse e-mail'] || '',
+        gender: row['Sexe'] || row['Gender'] || undefined,
       };
     }
   }

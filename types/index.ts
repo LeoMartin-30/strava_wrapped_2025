@@ -29,6 +29,7 @@ export interface ProfileData {
   lastName: string;
   city: string;
   bio: string;
+  gender?: string; // M or F
 }
 
 export interface PreferencesData {

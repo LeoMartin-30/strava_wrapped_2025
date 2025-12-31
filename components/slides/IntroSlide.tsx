@@ -94,27 +94,6 @@ export default function IntroSlide({ data, onNext, onPrevious }: SlideProps) {
             </div>
           </motion.div>
 
-          {/* Dynamic Profile Badge */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.5, duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-3"
-            style={{
-              background: `linear-gradient(135deg, ${dominance.theme.colors.primary}20 0%, ${dominance.theme.colors.primary}08 100%)`,
-              border: `1px solid ${dominance.theme.colors.primary}50`,
-              boxShadow: `0 0 20px ${dominance.theme.colors.primary}30`,
-            }}
-          >
-            <span className="text-sm">{dominance.theme.badge.emoji}</span>
-            <span
-              className="text-[10px] font-bold tracking-wider uppercase"
-              style={{ color: dominance.theme.colors.secondary }}
-            >
-              {dominance.theme.badge.label}
-            </span>
-          </motion.div>
-
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

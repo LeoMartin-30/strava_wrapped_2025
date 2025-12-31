@@ -7,7 +7,7 @@ export type Language = 'fr' | 'en';
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: string) => string;
+  t: (key: string, gender?: string) => string;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -66,6 +66,7 @@ const translations: Record<Language, Record<string, string>> = {
     'slide.dominance.title': 'Ton Profil Athlétique',
     'slide.identity.title': 'Identité',
     'slide.identity.certifiedAthlete': 'Athlète Certifié',
+    'slide.identity.certifiedAthlete.F': 'Athlète Certifiée',
     'slide.identity.hello': 'Salut',
     'slide.identity.readyForRecap': 'Prêt pour le récap',
     'slide.identity.ofYourEpicIn': 'de ton épopée à',
@@ -76,6 +77,7 @@ const translations: Record<Language, Record<string, string>> = {
     'slide.breakdown.activityTypes': 'types d\'activités',
     'slide.breakdown.tapToContinue': 'Tap pour continuer',
     'slide.elevation.title': 'Le Grimpeur',
+    'slide.elevation.title.F': 'La Grimpeuse',
     'slide.elevation.subtitle': 'Dénivelé positif conquis',
     'slide.elevation.elevationGain': 'Dénivelé +',
     'slide.elevation.metersClimbed': 'mètres grimpés',
@@ -91,8 +93,10 @@ const translations: Record<Language, Record<string, string>> = {
     'slide.chronos.subtitle': 'Quand vous bougez',
     'slide.chronos.favoriteTime': 'Ton créneau préféré',
     'slide.weather.title': 'Guerrier Météo',
+    'slide.weather.title.F': 'Guerrière Météo',
     'slide.weather.subtitle': 'Toutes conditions, toute l\'année',
     'slide.kudos.title': 'Le Chasseur de Kudos',
+    'slide.kudos.title.F': 'La Chasseuse de Kudos',
     'slide.kudos.subtitle': 'Ta popularité en 2025',
     'slide.kudos.kudosReceived': 'kudos reçus',
     'slide.kudos.onActivities': 'Sur',
@@ -510,7 +514,16 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   }, []);
 
   // Translation function
-  const t = useCallback((key: string): string => {
+  const t = useCallback((key: string, gender?: string): string => {
+    // Try gendered version first if gender is provided
+    if (gender === 'F') {
+      const genderedKey = `${key}.F`;
+      const genderedTranslation = translations[language][genderedKey];
+      if (genderedTranslation) {
+        return genderedTranslation;
+      }
+    }
+    // Fallback to default
     return translations[language][key] || key;
   }, [language]);
 
